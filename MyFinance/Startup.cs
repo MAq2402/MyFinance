@@ -10,6 +10,7 @@ using MyFinance.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using MyFinance.Entities;
 using Microsoft.AspNetCore.Identity;
+using MyFinance.Repositories;
 
 namespace MyFinance
 {
@@ -30,9 +31,19 @@ namespace MyFinance
             services.AddDbContext<AppDbContext>(o =>
                                o.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<User, IdentityRole>()
-                    .AddEntityFrameworkStores<AppDbContext>()
-                    .AddDefaultTokenProviders();
+            services.AddIdentity<User, IdentityRole>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 1;
+                options.Password.RequiredUniqueChars = 0;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+            })
+            .AddEntityFrameworkStores<AppDbContext>()
+            .AddDefaultTokenProviders();
+
+            services.AddScoped<IAccountRepository, AccountRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

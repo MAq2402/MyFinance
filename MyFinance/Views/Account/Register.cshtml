@@ -1,0 +1,38 @@
+﻿@model MyFinance.Models.Account.RegisterViewModel
+<style>
+    form {
+        width: 30%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .btnDiv {
+        text-align: center;
+    }
+
+    button {
+        width: 100%;
+    }
+
+</style>
+<div class="container-fluid">
+    <form method="post" class="form-horizontal">
+        <div class="form-group">
+            <label asp-for="@Model.UserName"></label>
+            <input asp-for="@Model.UserName" type="text" class="form-control" placeholder="Nazwa użytkownika">
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Password"></label>
+            <input asp-for="@Model.Password" type="password" class="form-control" placeholder="Hasło">
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.ConfirmPassword"></label>
+            <input asp-for="ConfirmPassword" type="password" class="form-control" placeholder="Potwierdź hasło">
+        </div>
+        <div class="btnDiv">
+            <button asp-action="Register" asp-controller="Account" class="btn btn-success" type="submit">
+                Zarejestruj się
+            </button>
+        </div>
+    </form>
+</div>
