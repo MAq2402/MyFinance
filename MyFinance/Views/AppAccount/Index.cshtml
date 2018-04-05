@@ -2,10 +2,11 @@
 @{ 
     ViewBag.Title = "Konta";
 }
-<div class="panel panel-default">
-    <!-- Default panel contents -->
-    <div class="panel-heading">Twoje konta</div>
 
+<div class="panel panel-default">
+   <!-- Default panel contents -->
+   <div class="panel-heading">Twoje konta</div>
+    @await Component.InvokeAsync("AddAppAccount")
     <!-- Table -->
     <table class="table">
         <thead>

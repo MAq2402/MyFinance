@@ -1,39 +1,65 @@
 ﻿@model MyFinance.Models.Account.LoginViewModel
+@{
+    ViewBag.Title = "Strona logowania";
+    Layout = null;
+}
+<!DOCTYPE html>
 <style>
     form {
-        width:30%;
-        margin-left:auto;
-        margin-right:auto;
+        width: 30%;
+        margin-left: auto;
+        margin-right: auto;
     }
+
     .btnDiv {
         text-align: center;
     }
-    button{
-        width:100%;
-    }
-    .RegisterSpan{
-        text-align:center;
+
+    button {
+        width: 100%;
     }
 
+    .RegisterSpan {
+        text-align: center;
+    }
 </style>
-<div class="container-fluid">
-    <form method="post" class="form-horizontal">
-        <div class="form-group">
-            <label asp-for="@Model.UserName"></label>
-            <input asp-for="@Model.UserName" type="text" class="form-control" placeholder="Nazwa użytkownika">
-        </div>
-        <div class="form-group">
-            <label asp-for="@Model.Password"></label>
-            <input asp-for="@Model.Password" type="password" class="form-control" placeholder="Hasło">
-        </div>
-        <div class="btnDiv">
-            <button asp-action="Login" asp-controller="Account" class="btn btn-success" type="submit">
-                Zaloguj się
-            </button>
-        </div>
-    </form>
-    <div class="RegisterSpan">
-        <span>Nie masz konta? <a asp-action="Register" asp-controller="Account">zarejestruj się.</a></span>
-    </div>
-</div>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - MyFinance</title>
 
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+    </environment>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <form method="post" class="form-horizontal">
+            <div class="form-group">
+                <label asp-for="@Model.UserName"></label>
+                <input asp-for="@Model.UserName" type="text" class="form-control" placeholder="Nazwa użytkownika">
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Password"></label>
+                <input asp-for="@Model.Password" type="password" class="form-control" placeholder="Hasło">
+            </div>
+            <div class="btnDiv">
+                <button asp-action="Login" asp-controller="Account" class="btn btn-success" type="submit">
+                    Zaloguj się
+                </button>
+            </div>
+        </form>
+        <div class="RegisterSpan">
+            <span>Nie masz konta? <a asp-action="Register" asp-controller="Account">zarejestruj się.</a></span>
+        </div>
+    </div>
+</body>
+</html>

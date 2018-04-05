@@ -1,4 +1,9 @@
 ﻿@model MyFinance.Models.Account.RegisterViewModel
+@{
+    ViewBag.Title = "Strona rejestracji";
+    Layout = null;
+}
+<!DOCTYPE html>
 <style>
     form {
         width: 30%;
@@ -13,26 +18,50 @@
     button {
         width: 100%;
     }
-
+    .LoginSpan {
+        text-align: center;
+    }
 </style>
-<div class="container-fluid">
-    <form method="post" class="form-horizontal">
-        <div class="form-group">
-            <label asp-for="@Model.UserName"></label>
-            <input asp-for="@Model.UserName" type="text" class="form-control" placeholder="Nazwa użytkownika">
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - MyFinance</title>
+
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+    </environment>
+</head>
+<body>
+    <div class="container-fluid">
+        <form method="post" class="form-horizontal">
+            <div class="form-group">
+                <label asp-for="@Model.UserName"></label>
+                <input asp-for="@Model.UserName" type="text" class="form-control" placeholder="Nazwa użytkownika">
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Password"></label>
+                <input asp-for="@Model.Password" type="password" class="form-control" placeholder="Hasło">
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.ConfirmPassword"></label>
+                <input asp-for="ConfirmPassword" type="password" class="form-control" placeholder="Potwierdź hasło">
+            </div>
+            <div class="btnDiv">
+                <button asp-action="Register" asp-controller="Account" class="btn btn-success" type="submit">
+                    Zarejestruj się
+                </button>
+            </div>
+        </form>
+        <div class="LoginSpan">
+            <span>Masz już konto? <a asp-action="Login" asp-controller="Account">zaloguj się.</a></span>
         </div>
-        <div class="form-group">
-            <label asp-for="@Model.Password"></label>
-            <input asp-for="@Model.Password" type="password" class="form-control" placeholder="Hasło">
-        </div>
-        <div class="form-group">
-            <label asp-for="@Model.ConfirmPassword"></label>
-            <input asp-for="ConfirmPassword" type="password" class="form-control" placeholder="Potwierdź hasło">
-        </div>
-        <div class="btnDiv">
-            <button asp-action="Register" asp-controller="Account" class="btn btn-success" type="submit">
-                Zarejestruj się
-            </button>
-        </div>
-    </form>
-</div>
+    </div>
+</body>
+</html>

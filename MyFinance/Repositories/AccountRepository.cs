@@ -15,6 +15,12 @@ namespace MyFinance.Repositories
         {
             _context = context;
         }
+
+        public void AddAccountForUser(Account account,string userName)
+        {
+            _context.Users.FirstOrDefault(u => u.UserName == userName)?.Accounts.Add(account);
+        }
+
         public IEnumerable<Account> GetAccountsForUser(string userName)
         {
             return _context.Accounts.Where(a => a.User.UserName == userName);

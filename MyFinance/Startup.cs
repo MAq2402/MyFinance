@@ -44,6 +44,7 @@ namespace MyFinance
             .AddDefaultTokenProviders();
 
             services.AddScoped<IAccountRepository, AccountRepository>();
+            services.AddScoped<IAppRepository, AppRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,6 +59,11 @@ namespace MyFinance
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+
+            AutoMapper.Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<MyFinance.Models.AppAccount.AccountForCreation, MyFinance.Entities.Account>();
+            });
 
             app.UseStaticFiles();
 

@@ -9,5 +9,7 @@ namespace MyFinance.Repositories
     public interface IAccountRepository
     {
         IEnumerable<Account> GetAccountsForUser(string userName);
+
+        void AddAccountForUser(Account account,string userName);
     }
 }
