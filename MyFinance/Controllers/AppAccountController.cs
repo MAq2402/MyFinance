@@ -8,60 +8,81 @@ using MyFinance.Models.AppAccount;
 using Microsoft.AspNetCore.Authorization;
 using AutoMapper;
 using MyFinance.Entities;
+using Microsoft.EntityFrameworkCore;
+using MyFinance.Filters;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace MyFinance.Controllers
 {
     [Authorize]
+    [ValidateCurrentUser]
     public class AppAccountController : Controller
     {
         private IAccountRepository _accountRepository;
-        private IAppRepository _appRepository;
 
-        public AppAccountController(IAccountRepository accountRepository,IAppRepository appRepository)
+        public AppAccountController(IAccountRepository accountRepository)
         {
             _accountRepository = accountRepository;
-            _appRepository = appRepository;
         }
+        
         public IActionResult Index(string userName)
         {
-            if(User.Identity.Name!=userName)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-            var model = new MyFinance.Models.AppAccount.IndexViewModel();
 
-            model.Accounts = _accountRepository.GetAccountsForUser(userName);
+            var model = new MyFinance.Models.AppAccount.IndexViewModel
+            {
+                Accounts = _accountRepository.GetBy(a => a.User.UserName == userName)
+            };
 
             return View(model);
         }
         [HttpPost]
-        public IActionResult Index(string userName, AccountForCreation accountFromBody)
+        [ValidateModel]
+        public IActionResult Index(string userName, IndexViewModel modelFromBody)
         {
-            if (User.Identity.Name != userName)
-            {
-                return RedirectToAction("Index", "Home");
-            }
 
-            if(!ModelState.IsValid)
-            {
-                return View();
-            }
+            //if(!ModelState.IsValid)
+            //{
+            //    return View();
+            //}
 
-            var account = Mapper.Map<Account>(accountFromBody);
+            var account = new Account
+            {
+                Name = modelFromBody.Name
+            };
 
             _accountRepository.AddAccountForUser(account, userName);
 
-            if(!_appRepository.Commit())
+            if(!_accountRepository.Save())
             {
                 return RedirectToAction("Error", "Home");
             }
 
-            //stworz nowy taki ViewModel dla takiego widoku co bedzie wyswietlal konkretne konto.
+            var model = new TransactionCategorytViewModel
+            {
+                Account = account
+            };
 
-            return View();
+            return RedirectToAction("Account", "AppAccount", new { userName = userName, id = account.Id });
 
+        }
+        [HttpGet]
+        public IActionResult Account(string userName,int id)
+        {
+
+            var account = _accountRepository.GetById(id);
+
+            if(account==null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var model = new TransactionCategorytViewModel
+            {
+                Account = account
+            };
+
+            return View(model);
         }
     }
 }

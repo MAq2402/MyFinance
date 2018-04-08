@@ -1,4 +1,4 @@
-﻿@model MyFinance.Models.AppAccount.IndexViewModel
+﻿@model MyFinance.Models.TransactionCategory.IndexViewModel
 @{ 
     ViewBag.Title = "Konta";
     
@@ -8,9 +8,9 @@
     <!-- Default panel contents -->
 
     <div class="panel-heading">Twoje konta</div>
-    @await Component.InvokeAsync("AddAppAccount")
+    @await Component.InvokeAsync("AddCateogory")
     <!-- Table -->
-    <table class="table">
+    @*<table class="table">
         <tr>
             <th>Nazwa</th>
             <th>Saldo</th>
@@ -42,6 +42,6 @@
                 <td><a asp-action="Account" asp-controller="AppAccount" asp-all-route-data="dictionary"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></a></td>
             </tr>
         }
-    </table>
+    </table>*@
 </div>
 

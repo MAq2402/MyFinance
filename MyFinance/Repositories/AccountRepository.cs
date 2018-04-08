@@ -4,16 +4,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using MyFinance.DbContexts;
 using MyFinance.Entities;
+using MyFinance.Repositories.Base;
 
 namespace MyFinance.Repositories
 {
-    public class AccountRepository : IAccountRepository
+    public class AccountRepository :Repository<Account> ,IAccountRepository//IAccountRepositroy and Repository<T> both implement IRepository
     {
-        private AppDbContext _context;
-
-        public AccountRepository(AppDbContext context)
+        public AccountRepository(AppDbContext context):base(context)
         {
-            _context = context;
+
         }
 
         public void AddAccountForUser(Account account,string userName)
@@ -21,9 +20,5 @@ namespace MyFinance.Repositories
             _context.Users.FirstOrDefault(u => u.UserName == userName)?.Accounts.Add(account);
         }
 
-        public IEnumerable<Account> GetAccountsForUser(string userName)
-        {
-            return _context.Accounts.Where(a => a.User.UserName == userName);
-        }
     }
 }

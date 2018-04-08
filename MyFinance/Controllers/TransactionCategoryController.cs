@@ -8,11 +8,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MyFinance.Controllers
 {
-    public class CategoryController : Controller
+    public class TransactionCategoryController : Controller
     {
-        // GET: /<controller>/
-        public IActionResult Index()
+       
+        public IActionResult Index(string userName)
         {
+
+
             return View();
         }
     }

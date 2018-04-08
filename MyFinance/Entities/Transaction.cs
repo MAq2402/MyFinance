@@ -1,15 +1,15 @@
-﻿using System;
+﻿using MyFinance.Entities.Base;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace MyFinance.Entities
 {
-    public class Transaction
+    public class Transaction:Entity
     {
-        public int Id { get; set; }
         public int CategoryId { get; set; }
-        public TransactionCategory Category { get; set; }
+        public virtual TransactionCategory Category { get; set; }
         public int AccountId { get; set; }
         public Account Account { get; set; }
         public string Description { get; set; }

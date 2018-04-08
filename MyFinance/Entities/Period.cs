@@ -1,13 +1,13 @@
-﻿using System;
+﻿using MyFinance.Entities.Base;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace MyFinance.Entities
 {
-    public class Period
-    {
-        public int Id { get; set; }
+    public class Period:Entity
+    { 
         public DateTime Start { get; set; } = DateTime.Now;
         public DateTime End { get; set; }
         public bool IsPresent { get; set; } = true;
