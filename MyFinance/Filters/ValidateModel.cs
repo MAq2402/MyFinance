@@ -21,15 +21,16 @@ namespace MyFinance.Filters
             //var model = context.ActionArguments["modelFromBody"];
             //if(!context.ModelState.IsValid)
             //{
-                
+
             //    var view = new ViewResult
             //    {
             //        ViewData
             //    }
-                
+
             //    context.Result = new ViewResult { ViewData = new { userName = context.ActionArguments["userName"], modelFromBody = model } };
             //    }
             //}
         }
     }
+}
 

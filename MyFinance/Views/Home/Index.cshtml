@@ -1,4 +1,83 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+<style>
+    .panel-heading {
+        /*padding-bottom: 20px;*/
+    }
+
+    .Balance {
+        float: right;
+    }
+
+    .Earnings {
+    }
+
+    .Expanses {
+    }
+    .period
+    {
+        float:right;
+    }
+    .dropdown
+    {
+        margin-right:100px;
+    }
+</style>
+<div class="panel panel-success">
+    <div class="panel-heading">
+        <div class="row">
+            <div class="col-sm-1">
+                <span class="Earnings">Przychody:</span>
+                <br />
+                <span class="Expanses">Wydatki:</span>
+                <br />
+                <span class="Sum">Suma:</span>
+            </div>
+            <div class="col-sm-1">
+                <span>1000</span>
+                <br />
+                <span>200</span>
+                <br />
+                <span>800</span>
+            </div>
+            <div class="col-sm-10 period">
+                <span class="period">Początek aktualnego okresu: 01.01.2018</span>
+                <br />
+                <div class="dropdown period">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        Wybór okresu
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel-body">
+        Tu będzie przycisk dodaj który przekieruje na inny widok , w którym bedzie można dodać transakcje
+        <table class="table">
+            <tr>
+                <th>Nazwa kategorii</th>
+                <th>Suma (zł)</th>
+                <th>Rodzaj</th>
+                <th>Data</th>
+                <th>Szczegóły</th>
+            </tr>
+            <tr>
+                <td>Jedzenie</td>
+                <td>20</td>
+                <td>Wydatek</td>
+                <td>Wczoraj</td>
+                <td><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"> </span></td>
+            </tr>
+        </table>
+    </div>
+</div>
 

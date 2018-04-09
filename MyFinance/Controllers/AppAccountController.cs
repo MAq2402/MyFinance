@@ -37,14 +37,14 @@ namespace MyFinance.Controllers
             return View(model);
         }
         [HttpPost]
-        [ValidateModel]
+        //[ValidateModel]
         public IActionResult Index(string userName, IndexViewModel modelFromBody)
         {
 
-            //if(!ModelState.IsValid)
-            //{
-            //    return View();
-            //}
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
 
             var account = new Account
             {
