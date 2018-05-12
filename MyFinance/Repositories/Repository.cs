@@ -6,11 +6,11 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace MyFinance.Repositories.Base
+namespace MyFinance.Repositories
 {
-    public abstract class Repository<T> : IRepository<T> where T:Entity
+    public class Repository<T> : IRepository<T> where T:Entity
     {
-        protected AppDbContext _context;
+        private AppDbContext _context;
 
         public Repository(AppDbContext context)
         {
@@ -37,9 +37,10 @@ namespace MyFinance.Repositories.Base
             return _context.Set<T>().Where(predicate);
         }
 
-        public virtual T GetById(int id)
+
+        public T GetSingleBy(Expression<Func<T, bool>> predicate)
         {
-            return _context.Set<T>().FirstOrDefault(x => x.Id == id);
+            return _context.Set<T>().Where(predicate).SingleOrDefault();
         }
 
         public virtual bool Save()

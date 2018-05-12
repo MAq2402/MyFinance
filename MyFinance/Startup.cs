@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using MyFinance.Entities;
 using Microsoft.AspNetCore.Identity;
 using MyFinance.Repositories;
+using MyFinance.Services;
 
 namespace MyFinance
 {
@@ -43,7 +44,9 @@ namespace MyFinance
             .AddEntityFrameworkStores<AppDbContext>()
             .AddDefaultTokenProviders();
 
-            services.AddScoped<IAccountRepository, AccountRepository>();
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped<IAppAccountService, AppAccountService>();
+            services.AddScoped<ITransactionCategoryService, TransactionCategoryService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

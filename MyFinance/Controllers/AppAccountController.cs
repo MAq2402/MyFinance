@@ -10,6 +10,7 @@ using AutoMapper;
 using MyFinance.Entities;
 using Microsoft.EntityFrameworkCore;
 using MyFinance.Filters;
+using MyFinance.Services;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -19,26 +20,26 @@ namespace MyFinance.Controllers
     [ValidateCurrentUser]
     public class AppAccountController : Controller
     {
-        private IAccountRepository _accountRepository;
+        private IAppAccountService _accountService;
 
-        public AppAccountController(IAccountRepository accountRepository)
+        public AppAccountController(IAppAccountService accountService)
         {
-            _accountRepository = accountRepository;
+            _accountService = accountService;
         }
         
-        public IActionResult Index(string userName)
+        public async  Task<IActionResult> Index(string userName)
         {
 
             var model = new MyFinance.Models.AppAccount.IndexViewModel
             {
-                Accounts = _accountRepository.GetBy(a => a.User.UserName == userName)
+                Accounts = await _accountService.GetAccountsAsync(userName)
             };
 
             return View(model);
         }
         [HttpPost]
         //[ValidateModel]
-        public IActionResult Index(string userName, IndexViewModel modelFromBody)
+        public async Task<IActionResult> Index(string userName, IndexViewModel modelFromBody)
         {
 
             if (!ModelState.IsValid)
@@ -46,38 +47,27 @@ namespace MyFinance.Controllers
                 return View();
             }
 
-            var account = new Account
-            {
-                Name = modelFromBody.Name
-            };
+            var account = await _accountService.AddAccountAsync(modelFromBody, userName);
 
-            _accountRepository.AddAccountForUser(account, userName);
-
-            if(!_accountRepository.Save())
-            {
-                return RedirectToAction("Error", "Home");
-            }
-
-            var model = new TransactionCategorytViewModel
+            var modelToReturn = new AccountViewModel
             {
                 Account = account
             };
-
             return RedirectToAction("Account", "AppAccount", new { userName = userName, id = account.Id });
 
         }
         [HttpGet]
-        public IActionResult Account(string userName,int id)
+        public async Task<IActionResult> Account(string userName,int id)
         {
 
-            var account = _accountRepository.GetById(id);
+            var account = await _accountService.GetAccountAsync(userName,id);
 
             if(account==null)
             {
                 return RedirectToAction("Index", "Home");
             }
 
-            var model = new TransactionCategorytViewModel
+            var model = new AccountViewModel
             {
                 Account = account
             };

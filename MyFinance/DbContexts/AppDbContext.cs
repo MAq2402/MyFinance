@@ -16,7 +16,6 @@ namespace MyFinance.DbContexts
         }
 
         public DbSet<Account>  Accounts { get; set; }
-        public DbSet<Period> Periods { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<TransactionCategory> TransactionCategories { get; set; }
     }

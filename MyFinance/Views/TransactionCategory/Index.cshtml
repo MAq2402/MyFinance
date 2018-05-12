@@ -8,9 +8,8 @@
     <!-- Default panel contents -->
 
     <div class="panel-heading">Twoje konta</div>
-    @await Component.InvokeAsync("AddCateogory")
-    <!-- Table -->
-    @*<table class="table">
+    @await Component.InvokeAsync("AddCategory")
+    <table class="table">
         <tr>
             <th>Nazwa</th>
             <th>Saldo</th>
@@ -18,30 +17,20 @@
             <th>Ilość transakcji</th>
             <th>Szczegóły</th>
         </tr>
-        @foreach (var account in Model.Accounts)
+        @foreach (var category in Model.Categories)
         {
             <tr>
-                <td>@account.Name</td>
-                <td>@account.Amount</td>
-                @if (account.IsBlocked)
-                {
-                    <td>Tak</td>
-                }
-                else
-                {
-                    <td>Nie</td>
-                }
-                <td>@account.Transactions.Count</td>
+                <td>@category.Name</td>
                 @{
                     var dictionary = new Dictionary<string, string>
                             {
                                 {"userName",User.Identity.Name },
-                                {"id",account.Id.ToString() }
+                                {"id",category.Id.ToString() }
                             };
                 }
-                <td><a asp-action="Account" asp-controller="AppAccount" asp-all-route-data="dictionary"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></a></td>
+                <td><a asp-action="Category" asp-controller="TransactionCategory" asp-all-route-data="dictionary"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></a></td>
             </tr>
         }
-    </table>*@
+    </table>
 </div>
 

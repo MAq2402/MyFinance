@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MyFinance.Models.AppAccount
 {
-    public class TransactionCategorytViewModel
+    public class AccountViewModel
     {
         public MyFinance.Entities.Account Account { get; set; }
     }

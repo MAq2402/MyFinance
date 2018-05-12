@@ -16,8 +16,6 @@ namespace MyFinance.Entities
         public DateTime DateTime { get; set; } = DateTime.Now;
         public decimal Amount { get; set; } 
         public bool IsExpanse { get; set; }
-        public int PeriodId { get; set; }
-        public Period Period { get; set; }
 
     }
 }

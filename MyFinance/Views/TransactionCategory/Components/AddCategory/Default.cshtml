@@ -1,4 +1,4 @@
-﻿@model MyFinance.Models.AppAccount.IndexViewModel
+﻿@model MyFinance.Models.TransactionCategory.IndexViewModel
 <style>
     .col-lg-12 {
         padding-left: 0px;
@@ -11,7 +11,7 @@
             <span class="input-group-btn">
                 <button asp-action="Index" asp-controller="TransactionCategory" asp-route-userName="@User.Identity.Name" class="btn btn-success" type="submit">Dodaj kategorie</button>
             </span>
-            @*<input asp-for="@Model.Name" type="text" class="form-control" placeholder="Nazwa konta">*@
+            <input asp-for="@Model.Name" type="text" class="form-control" placeholder="Nazwa kategorii">
         </div>
     </div>
 </form>
