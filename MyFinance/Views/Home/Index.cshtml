@@ -1,4 +1,5 @@
-﻿@{
+﻿@model MyFinance.Models.Home.HomeViewModel
+@{
     ViewData["Title"] = "Home Page";
 }
 <style>
@@ -66,16 +67,28 @@
             <tr>
                 <th>Nazwa kategorii</th>
                 <th>Suma (zł)</th>
+                <th>Konto</th>
                 <th>Rodzaj</th>
                 <th>Data</th>
                 <th>Szczegóły</th>
             </tr>
-            <tr>
-                <td>Jedzenie</td>
-                <td>20</td>
-                <td>Wydatek</td>
-                <td>Wczoraj</td>
+            @foreach(var transaction in Model.Transactions)
+            {
+                <td>@transaction.Category.Name</td>
+                <td>@transaction.Amount</td>
+                <td>@transaction.Account.Name</td>
+                if(transaction.IsExpanse)
+                {
+                    <td>Wydatek</td>
+                }
+                else
+                {
+                    <td>Przychód</td>
+                }
+                <td>@transaction.DateTime.ToString("dd.mm.yyyy")</td>
                 <td><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"> </span></td>
+            }
+            <tr>              
             </tr>
         </table>
     </div>

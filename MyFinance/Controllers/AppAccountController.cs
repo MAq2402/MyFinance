@@ -27,7 +27,7 @@ namespace MyFinance.Controllers
             _accountService = accountService;
         }
         
-        public async  Task<IActionResult> Index(string userName)
+        public async Task<IActionResult> Index(string userName)
         {
 
             var model = new MyFinance.Models.AppAccount.IndexViewModel
