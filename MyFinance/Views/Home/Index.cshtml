@@ -4,6 +4,8 @@
 }
 <head>
     <link href="~/css/Home-Index.css" rel="stylesheet" />
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+
 </head>
 <div class="panel panel-success">
     <div class="panel-heading">
@@ -23,19 +25,19 @@
                 <span>800</span>
             </div>
             <div class="col-sm-10 period">
-                <ul class="nav nav-pills navbar-right" role="tablist">
-                    <li class=@ViewBag.Active1 role="presentation"><a asp-action="Index" asp-controller="Home" asp-route-monthNumber="1">Styczeń <span class="badge"></span></a></li>
-                    <li class=@ViewBag.Active2 role="presentation"><a asp-action="Index" asp-controller="Home" asp-route-monthNumber="2">Luty</a></li>
-                    <li class=@ViewBag.Active3 role="presentation"><a asp-action="Index" asp-controller="Home" asp-route-monthNumber="3">Marzec<span class="badge"></span></a></li>
-                    <li class=@ViewBag.Active4 role="presentation"><a asp-action="Index" asp-controller="Home" asp-route-monthNumber="4">Kwiecień <span class="badge"></span></a></li>
-                    <li class=@ViewBag.Active5 role="presentation"><a asp-action="Index" asp-controller="Home" asp-route-monthNumber="5">Maj</a></li>
-                    <li class=@ViewBag.Active6 role="presentation"><a asp-action="Index" asp-controller="Home" asp-route-monthNumber="6">Czerwiec<span class="badge"></span></a></li>
-                    <li class=@ViewBag.Active7 role="presentation"><a asp-action="Index" asp-controller="Home" asp-route-monthNumber="7">Lipiec <span class="badge"></span></a></li>
-                    <li class=@ViewBag.Active8 role="presentation"><a asp-action="Index" asp-controller="Home" asp-route-monthNumber="8">Sierpień</a></li>
-                    <li class=@ViewBag.Active9 role="presentation"><a asp-action="Index" asp-controller="Home" asp-route-monthNumber="9">Wrzesień<span class="badge"></span></a></li>
-                    <li class=@ViewBag.Active10 role="presentation"><a asp-action="Index" asp-controller="Home" asp-route-monthNumber="10">Październik <span class="badge"></span></a></li>
-                    <li class=@ViewBag.Active11 role="presentation"><a asp-action="Index" asp-controller="Home" asp-route-monthNumber="11">Listopad</a></li>
-                    <li class=@ViewBag.Active12 role="presentation"><a asp-action="Index" asp-controller="Home" asp-route-monthNumber="12">Grudzień<span class="badge"></span></a></li>
+                <ul id="months" class="nav nav-pills navbar-right" role="tablist">
+                    <li id="li1" class="month"  role="presentation"><a id="a1" asp-action="Index" asp-controller="Home" asp-route-monthNumber="1">Styczeń <span class="badge"></span></a></li>
+                    <li id="li2" class="month" role="presentation"><a id="a2" asp-action="Index" asp-controller="Home" asp-route-monthNumber="2">Luty</a></li>
+                    <li id="li3" class="month" role="presentation"><a id="a3" asp-action="Index" asp-controller="Home" asp-route-monthNumber="3">Marzec<span class="badge"></span></a></li>
+                    <li id="li4" class="month" role ="presentation"><a id="a4" asp-action="Index" asp-controller="Home" asp-route-monthNumber="4">Kwiecień <span class="badge"></span></a></li>
+                    <li id="li5" class="month" role="presentation"><a id="a5" asp-action="Index" asp-controller="Home" asp-route-monthNumber="5">Maj</a></li>
+                    <li id="li6" class="month" role="presentation"><a id="a6" asp-action="Index" asp-controller="Home" asp-route-monthNumber="6">Czerwiec<span class="badge"></span></a></li>
+                    <li id="li7" class="month" role="presentation"><a id="a7" asp-action="Index" asp-controller="Home" asp-route-monthNumber="7">Lipiec <span class="badge"></span></a></li>
+                    <li id="li8" class="month" role="presentation"><a id="a8" asp-action="Index" asp-controller="Home" asp-route-monthNumber="8">Sierpień</a></li>
+                    <li id="li9" class="month" role="presentation"><a id="a9" asp-action="Index" asp-controller="Home" asp-route-monthNumber="9">Wrzesień<span class="badge"></span></a></li>
+                    <li id="li10" class="month" role="presentation"><a id="a10" asp-action="Index" asp-controller="Home" asp-route-monthNumber="10">Październik <span class="badge"></span></a></li>
+                    <li id="li11" class="month" role="presentation"><a id="a11" asp-action="Index" asp-controller="Home" asp-route-monthNumber="11">Listopad</a></li>
+                    <li id="li12" class="month" role="presentation"><a id="a12" asp-action="Index" asp-controller="Home" asp-route-monthNumber="12">Grudzień<span class="badge"></span></a></li>
                 </ul>
             </div>
         </div>
@@ -73,4 +75,5 @@
         </table>
     </div>
 </div>
+<script src="~/js/month.js"></script>
 
