@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using MyFinance.Entities;
+using MyFinance.Models.Enums;
+using MyFinance.Models.Transaction;
 using MyFinance.Repositories;
 using System;
 using System.Collections.Generic;
@@ -22,6 +25,35 @@ namespace MyFinance.Services
             _accountRepository = accountRepository;
         }
 
+        public Transaction AddTransaction(CreateViewModel model)
+        {
+            bool isExpanse;
+            if(model.Type==TransactionType.Expanse)
+            {
+                isExpanse = true;
+            }
+            else
+            {
+                isExpanse = false;
+            }
+            var transaction = new Transaction
+            {
+                AccountId = model.AccountId,
+                Amount = model.Amount,
+                CategoryId = model.CategoryId,
+                Description = model.Description,
+                IsExpanse = isExpanse,
+            };
+            _transactionRepository.Add(transaction);
+
+            if(!_transactionRepository.Save())
+            {
+                throw new Exception("Could not save");
+            }
+
+            return transaction;
+        }
+
         public async Task<IEnumerable<Transaction>> GetTransactionsAsync(string userName)
         {
             var user = await _userManager.FindByNameAsync(userName);
@@ -31,7 +63,22 @@ namespace MyFinance.Services
                 throw new Exception("Could not find user");
             }
 
-            return _transactionRepository.GetBy(t => t.Account.UserId == user.Id);
+            return _transactionRepository.GetBy(t => t.Account.UserId == user.Id)
+                                         .Include(t => t.Category)
+                                         .Include(t => t.Account)
+                                         .OrderByDescending(t => t.DateTime);
+        }
+
+        public async Task<Transaction> GetTransactionAsync(string userName, int id)
+        {
+            var user = await _userManager.FindByNameAsync(userName);
+
+            if (user == null)
+            {
+                throw new Exception("Could not find user");
+            }
+
+            return _transactionRepository.GetSingleBy(t => t.Account.UserId == user.Id&&t.Id==id);
         }
     }
 }

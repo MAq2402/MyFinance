@@ -1,0 +1,21 @@
+﻿.panel-heading {
+    /*padding-bottom: 20px;*/
+}
+
+.Balance {
+    float: right;
+}
+
+.Earnings {
+}
+
+.Expanses {
+}
+
+.period {
+    float: right;
+}
+
+.dropdown {
+    margin-right: 100px;
+}

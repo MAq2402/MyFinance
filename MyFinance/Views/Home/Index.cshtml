@@ -2,29 +2,9 @@
 @{
     ViewData["Title"] = "Home Page";
 }
-<style>
-    .panel-heading {
-        /*padding-bottom: 20px;*/
-    }
-
-    .Balance {
-        float: right;
-    }
-
-    .Earnings {
-    }
-
-    .Expanses {
-    }
-    .period
-    {
-        float:right;
-    }
-    .dropdown
-    {
-        margin-right:100px;
-    }
-</style>
+<head>
+    <link href="~/css/Home-Index.css" rel="stylesheet" />
+</head>
 <div class="panel panel-success">
     <div class="panel-heading">
         <div class="row">
@@ -43,26 +23,25 @@
                 <span>800</span>
             </div>
             <div class="col-sm-10 period">
-                <span class="period">Początek aktualnego okresu: 01.01.2018</span>
-                <br />
-                <div class="dropdown period">
-                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        Wybór okresu
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
-                    </ul>
-                </div>
+                <ul class="nav nav-pills navbar-right" role="tablist">
+                    <li class=@ViewBag.Active1 role="presentation"><a asp-action="Index" asp-controller="Home" asp-route-monthNumber="1">Styczeń <span class="badge"></span></a></li>
+                    <li class=@ViewBag.Active2 role="presentation"><a asp-action="Index" asp-controller="Home" asp-route-monthNumber="2">Luty</a></li>
+                    <li class=@ViewBag.Active3 role="presentation"><a asp-action="Index" asp-controller="Home" asp-route-monthNumber="3">Marzec<span class="badge"></span></a></li>
+                    <li class=@ViewBag.Active4 role="presentation"><a asp-action="Index" asp-controller="Home" asp-route-monthNumber="4">Kwiecień <span class="badge"></span></a></li>
+                    <li class=@ViewBag.Active5 role="presentation"><a asp-action="Index" asp-controller="Home" asp-route-monthNumber="5">Maj</a></li>
+                    <li class=@ViewBag.Active6 role="presentation"><a asp-action="Index" asp-controller="Home" asp-route-monthNumber="6">Czerwiec<span class="badge"></span></a></li>
+                    <li class=@ViewBag.Active7 role="presentation"><a asp-action="Index" asp-controller="Home" asp-route-monthNumber="7">Lipiec <span class="badge"></span></a></li>
+                    <li class=@ViewBag.Active8 role="presentation"><a asp-action="Index" asp-controller="Home" asp-route-monthNumber="8">Sierpień</a></li>
+                    <li class=@ViewBag.Active9 role="presentation"><a asp-action="Index" asp-controller="Home" asp-route-monthNumber="9">Wrzesień<span class="badge"></span></a></li>
+                    <li class=@ViewBag.Active10 role="presentation"><a asp-action="Index" asp-controller="Home" asp-route-monthNumber="10">Październik <span class="badge"></span></a></li>
+                    <li class=@ViewBag.Active11 role="presentation"><a asp-action="Index" asp-controller="Home" asp-route-monthNumber="11">Listopad</a></li>
+                    <li class=@ViewBag.Active12 role="presentation"><a asp-action="Index" asp-controller="Home" asp-route-monthNumber="12">Grudzień<span class="badge"></span></a></li>
+                </ul>
             </div>
         </div>
     </div>
     <div class="panel-body">
-        Tu będzie przycisk dodaj który przekieruje na inny widok , w którym bedzie można dodać transakcje
+        <a asp-action="Create" asp-controller="Transaction">Dodaj transakcje</a>
         <table class="table">
             <tr>
                 <th>Nazwa kategorii</th>
@@ -72,24 +51,25 @@
                 <th>Data</th>
                 <th>Szczegóły</th>
             </tr>
-            @foreach(var transaction in Model.Transactions)
+            @foreach (var transaction in Model.Transactions)
             {
-                <td>@transaction.Category.Name</td>
-                <td>@transaction.Amount</td>
-                <td>@transaction.Account.Name</td>
-                if(transaction.IsExpanse)
-                {
-                    <td>Wydatek</td>
-                }
-                else
-                {
-                    <td>Przychód</td>
-                }
-                <td>@transaction.DateTime.ToString("dd.mm.yyyy")</td>
-                <td><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"> </span></td>
+                <tr>
+                    <td>@transaction.Category.Name</td>
+                    <td>@transaction.Amount</td>
+                    <td>@transaction.Account.Name</td>
+                    @if (transaction.IsExpanse)
+                    {
+                        <td>Wydatek</td>
+                    }
+                    else
+                    {
+                        <td>Przychód</td>
+                    }
+                    <td>@transaction.DateTime.ToString("dd.MM.yyyy")</td>
+                    <td><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"> </span></td>
+                </tr>
             }
-            <tr>              
-            </tr>
+
         </table>
     </div>
 </div>
