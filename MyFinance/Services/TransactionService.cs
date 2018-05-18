@@ -36,6 +36,15 @@ namespace MyFinance.Services
             {
                 isExpanse = false;
             }
+
+            var splitedDateTime = model.DateTime.Split('.');
+
+            var day = Convert.ToInt32(splitedDateTime[0]);
+            var month =  Convert.ToInt32(splitedDateTime[1]);
+            var year = Convert.ToInt32(splitedDateTime[2]);
+
+            var dateTime = new DateTime(year, month, day);
+
             var transaction = new Transaction
             {
                 AccountId = model.AccountId,
@@ -43,6 +52,7 @@ namespace MyFinance.Services
                 CategoryId = model.CategoryId,
                 Description = model.Description,
                 IsExpanse = isExpanse,
+                DateTime = dateTime
             };
             _transactionRepository.Add(transaction);
 
@@ -54,7 +64,7 @@ namespace MyFinance.Services
             return transaction;
         }
 
-        public async Task<IEnumerable<Transaction>> GetTransactionsAsync(string userName)
+        public async Task<IEnumerable<Transaction>> GetTransactionsAsync(string userName,int month)
         {
             var user = await _userManager.FindByNameAsync(userName);
 
@@ -63,7 +73,7 @@ namespace MyFinance.Services
                 throw new Exception("Could not find user");
             }
 
-            return _transactionRepository.GetBy(t => t.Account.UserId == user.Id)
+            return _transactionRepository.GetBy(t => t.Account.UserId == user.Id&&t.DateTime.Month==month)
                                          .Include(t => t.Category)
                                          .Include(t => t.Account)
                                          .OrderByDescending(t => t.DateTime);
@@ -79,6 +89,32 @@ namespace MyFinance.Services
             }
 
             return _transactionRepository.GetSingleBy(t => t.Account.UserId == user.Id&&t.Id==id);
+        }
+
+        public decimal CalculateEarnings(IEnumerable<Transaction> transactions)
+        {
+            var earnings = 0.0m;
+            foreach(var transaction in transactions)
+            {
+                if(!transaction.IsExpanse)
+                {
+                    earnings += transaction.Amount;
+                }
+            }
+            return earnings;
+        }
+
+        public decimal CalculateExpanses(IEnumerable<Transaction> transactions)
+        {
+            var expanses = 0.0m;
+            foreach (var transaction in transactions)
+            {
+                if (transaction.IsExpanse)
+                {
+                    expanses += transaction.Amount;
+                }
+            }
+            return expanses;
         }
     }
 }

@@ -1,7 +1,8 @@
 ﻿{
     var lis = $('.month').removeClass('active');
     var url = location.href;
-    var month = url.split('=');
-    var newActive = $('#li' + month[1]);
+    var splitedUrl = url.split('=');
+    var month = splitedUrl[1];
+    var newActive = $('#li' + month);
     newActive.addClass('active');
 }

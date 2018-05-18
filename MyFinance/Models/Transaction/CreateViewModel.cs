@@ -20,5 +20,7 @@ namespace MyFinance.Models.Transaction
         public int CategoryId { get; set; }
         [Display(Name = "Konto")]
         public int AccountId { get; set; }
+        [Display(Name ="Data")]
+        public string DateTime { get; set; }
     }
 }

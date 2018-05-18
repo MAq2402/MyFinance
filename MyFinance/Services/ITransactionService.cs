@@ -9,10 +9,12 @@ namespace MyFinance.Services
 {
     public interface ITransactionService
     {
-        Task<IEnumerable<Transaction>> GetTransactionsAsync(string userName);
-
+        Task<IEnumerable<Transaction>> GetTransactionsAsync(string userName,int month);
         Task<Transaction> GetTransactionAsync(string userName,int id);
         Transaction AddTransaction(CreateViewModel model);
+        decimal CalculateEarnings(IEnumerable<Transaction> transactions);
+        decimal CalculateExpanses(IEnumerable<Transaction> transactions);
+
         
     }
 }

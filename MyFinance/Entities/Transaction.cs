@@ -13,7 +13,7 @@ namespace MyFinance.Entities
         public int AccountId { get; set; }
         public Account Account { get; set; }
         public string Description { get; set; }
-        public DateTime DateTime { get; set; } = DateTime.Now;
+        public DateTime DateTime { get; set; }
         public decimal Amount { get; set; } 
         public bool IsExpanse { get; set; }
 

@@ -7,73 +7,76 @@
     <script src="~/lib/jquery/dist/jquery.js"></script>
 
 </head>
-<div class="panel panel-success">
-    <div class="panel-heading">
-        <div class="row">
-            <div class="col-sm-1">
-                <span class="Earnings">Przychody:</span>
-                <br />
-                <span class="Expanses">Wydatki:</span>
-                <br />
-                <span class="Sum">Suma:</span>
+<div class="row">
+    <div class="col-sm-6">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-sm-1">
+                        <span class="Earnings">Przychody:</span>
+                        <br />
+                        <span class="Expanses">Wydatki:</span>
+                        <br />
+                        <span class="Sum">Suma:</span>
+                    </div>
+                    <div class="col-sm-1">
+                        <span>@Model.Earnings</span>
+                        <br />
+                        <span>@Model.Expanses</span>
+                        <br />
+                        <span>@(Model.Earnings - Model.Expanses)</span>
+                    </div>
+                    <div class="col-sm-10 period">
+                        <ul id="months" class="nav nav-pills navbar-right" role="tablist">
+                            <li id="li1" class="month" role="presentation"><a id="a1" asp-action="Index" asp-controller="Home" asp-route-monthNumber="1">Styczeń <span class="badge"></span></a></li>
+                            <li id="li2" class="month" role="presentation"><a id="a2" asp-action="Index" asp-controller="Home" asp-route-monthNumber="2">Luty</a></li>
+                            <li id="li3" class="month" role="presentation"><a id="a3" asp-action="Index" asp-controller="Home" asp-route-monthNumber="3">Marzec<span class="badge"></span></a></li>
+                            <li id="li4" class="month" role="presentation"><a id="a4" asp-action="Index" asp-controller="Home" asp-route-monthNumber="4">Kwiecień <span class="badge"></span></a></li>
+                            <li id="li5" class="month" role="presentation"><a id="a5" asp-action="Index" asp-controller="Home" asp-route-monthNumber="5">Maj</a></li>
+                            <li id="li6" class="month" role="presentation"><a id="a6" asp-action="Index" asp-controller="Home" asp-route-monthNumber="6">Czerwiec<span class="badge"></span></a></li>
+                            <li id="li7" class="month" role="presentation"><a id="a7" asp-action="Index" asp-controller="Home" asp-route-monthNumber="7">Lipiec <span class="badge"></span></a></li>
+                            <li id="li8" class="month" role="presentation"><a id="a8" asp-action="Index" asp-controller="Home" asp-route-monthNumber="8">Sierpień</a></li>
+                            <li id="li9" class="month" role="presentation"><a id="a9" asp-action="Index" asp-controller="Home" asp-route-monthNumber="9">Wrzesień<span class="badge"></span></a></li>
+                            <li id="li10" class="month" role="presentation"><a id="a10" asp-action="Index" asp-controller="Home" asp-route-monthNumber="10">Październik <span class="badge"></span></a></li>
+                            <li id="li11" class="month" role="presentation"><a id="a11" asp-action="Index" asp-controller="Home" asp-route-monthNumber="11">Listopad</a></li>
+                            <li id="li12" class="month" role="presentation"><a id="a12" asp-action="Index" asp-controller="Home" asp-route-monthNumber="12">Grudzień<span class="badge"></span></a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-            <div class="col-sm-1">
-                <span>1000</span>
-                <br />
-                <span>200</span>
-                <br />
-                <span>800</span>
-            </div>
-            <div class="col-sm-10 period">
-                <ul id="months" class="nav nav-pills navbar-right" role="tablist">
-                    <li id="li1" class="month"  role="presentation"><a id="a1" asp-action="Index" asp-controller="Home" asp-route-monthNumber="1">Styczeń <span class="badge"></span></a></li>
-                    <li id="li2" class="month" role="presentation"><a id="a2" asp-action="Index" asp-controller="Home" asp-route-monthNumber="2">Luty</a></li>
-                    <li id="li3" class="month" role="presentation"><a id="a3" asp-action="Index" asp-controller="Home" asp-route-monthNumber="3">Marzec<span class="badge"></span></a></li>
-                    <li id="li4" class="month" role ="presentation"><a id="a4" asp-action="Index" asp-controller="Home" asp-route-monthNumber="4">Kwiecień <span class="badge"></span></a></li>
-                    <li id="li5" class="month" role="presentation"><a id="a5" asp-action="Index" asp-controller="Home" asp-route-monthNumber="5">Maj</a></li>
-                    <li id="li6" class="month" role="presentation"><a id="a6" asp-action="Index" asp-controller="Home" asp-route-monthNumber="6">Czerwiec<span class="badge"></span></a></li>
-                    <li id="li7" class="month" role="presentation"><a id="a7" asp-action="Index" asp-controller="Home" asp-route-monthNumber="7">Lipiec <span class="badge"></span></a></li>
-                    <li id="li8" class="month" role="presentation"><a id="a8" asp-action="Index" asp-controller="Home" asp-route-monthNumber="8">Sierpień</a></li>
-                    <li id="li9" class="month" role="presentation"><a id="a9" asp-action="Index" asp-controller="Home" asp-route-monthNumber="9">Wrzesień<span class="badge"></span></a></li>
-                    <li id="li10" class="month" role="presentation"><a id="a10" asp-action="Index" asp-controller="Home" asp-route-monthNumber="10">Październik <span class="badge"></span></a></li>
-                    <li id="li11" class="month" role="presentation"><a id="a11" asp-action="Index" asp-controller="Home" asp-route-monthNumber="11">Listopad</a></li>
-                    <li id="li12" class="month" role="presentation"><a id="a12" asp-action="Index" asp-controller="Home" asp-route-monthNumber="12">Grudzień<span class="badge"></span></a></li>
-                </ul>
+            <div class="panel-body">
+                <a asp-action="Create" asp-controller="Transaction">Dodaj transakcje</a>
+                <table class="table">
+                    <tr>
+                        <th>Nazwa kategorii</th>
+                        <th>Suma (zł)</th>
+                        <th>Konto</th>
+                        <th>Rodzaj</th>
+                        <th>Data</th>
+                        <th>Szczegóły</th>
+                    </tr>
+                    @foreach (var transaction in Model.Transactions)
+                    {
+                        <tr>
+                            <td>@transaction.Category.Name</td>
+                            <td>@transaction.Amount</td>
+                            <td>@transaction.Account.Name</td>
+                            @if (transaction.IsExpanse)
+                            {
+                                <td>Wydatek</td>
+                            }
+                            else
+                            {
+                                <td>Przychód</td>
+                            }
+                            <td>@transaction.DateTime.ToString("dd.MM.yyyy")</td>
+                            <td><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"> </span></td>
+                        </tr>
+                    }
+
+                </table>
             </div>
         </div>
-    </div>
-    <div class="panel-body">
-        <a asp-action="Create" asp-controller="Transaction">Dodaj transakcje</a>
-        <table class="table">
-            <tr>
-                <th>Nazwa kategorii</th>
-                <th>Suma (zł)</th>
-                <th>Konto</th>
-                <th>Rodzaj</th>
-                <th>Data</th>
-                <th>Szczegóły</th>
-            </tr>
-            @foreach (var transaction in Model.Transactions)
-            {
-                <tr>
-                    <td>@transaction.Category.Name</td>
-                    <td>@transaction.Amount</td>
-                    <td>@transaction.Account.Name</td>
-                    @if (transaction.IsExpanse)
-                    {
-                        <td>Wydatek</td>
-                    }
-                    else
-                    {
-                        <td>Przychód</td>
-                    }
-                    <td>@transaction.DateTime.ToString("dd.MM.yyyy")</td>
-                    <td><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"> </span></td>
-                </tr>
-            }
-
-        </table>
+        <script src="~/js/month.js"></script>
     </div>
 </div>
-<script src="~/js/month.js"></script>
-

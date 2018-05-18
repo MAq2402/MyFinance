@@ -27,9 +27,21 @@ namespace MyFinance.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(int monthNumber)
         {
+            if(monthNumber==0)
+            {
+                monthNumber = DateTime.Now.Month;
+                return RedirectToAction("Index", "Home", new { monthNumber = monthNumber });
+            }
+
+            var transactions = await _transactionService.GetTransactionsAsync(User.Identity.Name, monthNumber);
+            var earnings = _transactionService.CalculateEarnings(transactions);
+            var expanses = _transactionService.CalculateExpanses(transactions);
+
             var model = new HomeViewModel
             {
-                Transactions = await _transactionService.GetTransactionsAsync(User.Identity.Name)
+                Transactions = transactions,
+                Earnings = earnings,
+                Expanses = expanses
             };
             return View(model);
         }
@@ -39,13 +51,5 @@ namespace MyFinance.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        //private void SetActiveMonth(int monthNumber)
-        //{
-        //    ViewBag as Dictionary<string,Object>();
-        //    for(int i=1;i<13;i++)
-        //    {
-        //        ViewBag.Active+i = 
-        //    }
-        //}
     }
 }

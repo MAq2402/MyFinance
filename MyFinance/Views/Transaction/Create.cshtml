@@ -4,6 +4,10 @@
 }
 <head>
     <link href="~/css/Home-Create.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap-datepicker/dist/css/bootstrap-datepicker.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css" rel="stylesheet" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
 </head>
 <div class="row">
     <div class="col-sm-3">
@@ -38,7 +42,14 @@
                         <label asp-for="@Model.Description"></label>
                         <br />
                         <input class="form-control description-input" asp-for="@Model.Description" />
-                    </div>  
+                    </div>
+                    <label asp-for="@Model.DateTime"></label>
+                    <div class="input-group date">
+
+                        <input asp-for="@Model.DateTime" type="text" class="form-control datepicker"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                    </div>
+
+
                 </div>
                 <div class="form-group">
                     <input class="btn btn-success" type="submit" value="Dodaj" />
@@ -48,4 +59,13 @@
         
     </div>
 </div>
+<script type="text/javascript">
+    var currentDate = new Date();
+    $('.datepicker').datepicker({
+        orientation: "bottom auto",
+        format: "mm.dd.yyyy",
+        todayHighlight: true
+        
+    });
+</script>
 

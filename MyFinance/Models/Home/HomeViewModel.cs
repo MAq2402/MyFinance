@@ -9,5 +9,7 @@ namespace MyFinance.Models.Home
     public class HomeViewModel
     {
         public IEnumerable<Entities.Transaction> Transactions { get; set; }
+        public decimal Earnings { get; set; }
+        public decimal Expanses { get; set; }
     }
 }
