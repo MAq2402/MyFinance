@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MyFinance.Entities;
+using MyFinance.Extensions;
 using MyFinance.Models.Enums;
 using MyFinance.Models.Transaction;
 using MyFinance.Repositories;
@@ -37,13 +38,7 @@ namespace MyFinance.Services
                 isExpanse = false;
             }
 
-            var splitedDateTime = model.DateTime.Split('.');
-
-            var day = Convert.ToInt32(splitedDateTime[0]);
-            var month =  Convert.ToInt32(splitedDateTime[1]);
-            var year = Convert.ToInt32(splitedDateTime[2]);
-
-            var dateTime = new DateTime(year, month, day);
+            var dateTime = new DateTime().GenerateFromString(model.DateTime);
 
             var transaction = new Transaction
             {
