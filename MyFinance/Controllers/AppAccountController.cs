@@ -17,7 +17,6 @@ using MyFinance.Services;
 namespace MyFinance.Controllers
 {
     [Authorize]
-    [ValidateCurrentUser]
     public class AppAccountController : Controller
     {
         private IAppAccountService _accountService;
@@ -27,19 +26,19 @@ namespace MyFinance.Controllers
             _accountService = accountService;
         }
         
-        public async Task<IActionResult> Index(string userName)
+        public async Task<IActionResult> Index()
         {
 
             var model = new MyFinance.Models.AppAccount.IndexViewModel
             {
-                Accounts = await _accountService.GetAccountsAsync(userName)
+                Accounts = await _accountService.GetAccountsAsync(User.Identity.Name)
             };
 
             return View(model);
         }
         [HttpPost]
         //[ValidateModel]
-        public async Task<IActionResult> Index(string userName, IndexViewModel modelFromBody)
+        public async Task<IActionResult> Index(IndexViewModel modelFromBody)
         {
 
             if (!ModelState.IsValid)
@@ -47,20 +46,20 @@ namespace MyFinance.Controllers
                 return View();
             }
 
-            var account = await _accountService.AddAccountAsync(modelFromBody, userName);
+            var account = await _accountService.AddAccountAsync(modelFromBody, User.Identity.Name);
 
             var modelToReturn = new AccountViewModel
             {
                 Account = account
             };
-            return RedirectToAction("Account", "AppAccount", new { userName = userName, id = account.Id });
+            return RedirectToAction("Account", "AppAccount", new { id = account.Id });
 
         }
         [HttpGet]
-        public async Task<IActionResult> Account(string userName,int id)
+        public async Task<IActionResult> Account(int id)
         {
 
-            var account = await _accountService.GetAccountAsync(userName,id);
+            var account = await _accountService.GetAccountAsync(User.Identity.Name,id);
 
             if(account==null)
             {

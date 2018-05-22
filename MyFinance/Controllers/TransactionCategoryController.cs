@@ -13,7 +13,6 @@ using MyFinance.Services;
 namespace MyFinance.Controllers
 {
     [Authorize]
-    [ValidateCurrentUser]
     public class TransactionCategoryController : Controller
     {
         private ITransactionCategoryService _categoryService;
@@ -23,9 +22,9 @@ namespace MyFinance.Controllers
             _categoryService = categoryService;
         }
         [HttpGet]       
-        public async Task<IActionResult> Index(string userName)
+        public async Task<IActionResult> Index()
         {
-            var categories = await _categoryService.GetCategories(userName);
+            var categories = await _categoryService.GetCategories(User.Identity.Name);
 
             var model = new MyFinance.Models.TransactionCategory.IndexViewModel
             {
@@ -35,9 +34,9 @@ namespace MyFinance.Controllers
             return View(model);
         }
         
-        public async Task<IActionResult> Category(string userName,int id)
+        public async Task<IActionResult> Category(int id)
         {
-            var category = await _categoryService.GetCategory(userName,id);
+            var category = await _categoryService.GetCategory(User.Identity.Name,id);
 
             if (category == null)
             {
@@ -54,7 +53,7 @@ namespace MyFinance.Controllers
 
         [HttpPost]
         //[ValidateModel]
-        public async Task<IActionResult> Index(string userName, Models.TransactionCategory.IndexViewModel modelFromBody)
+        public async Task<IActionResult> Index(Models.TransactionCategory.IndexViewModel modelFromBody)
         {
 
             if (!ModelState.IsValid)
@@ -62,13 +61,13 @@ namespace MyFinance.Controllers
                 return View();
             }
 
-            var category = await _categoryService.AddCategoryAsync(modelFromBody, userName);
+            var category = await _categoryService.AddCategoryAsync(modelFromBody,User.Identity.Name);
 
             var modelToReturn = new TransactionCategorytViewModel
             {
                 Category = category
             };
-            return RedirectToAction("Category", "TransactionCategory", new { userName = userName, id = category.Id });
+            return RedirectToAction("Category", "TransactionCategory", new { id = category.Id });
 
         }
     }

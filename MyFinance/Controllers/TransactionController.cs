@@ -28,11 +28,16 @@ namespace MyFinance.Controllers
         }
         // GET: /<controller>/
         [HttpPost]
-        public IActionResult Create(CreateViewModel model)
+        public async Task<IActionResult> Create(CreateViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                return View();
+                var userName = User.Identity.Name;
+
+                model.Accounts = await _accountService.GetAccountsAsync(userName);
+                model.Categories = await _transactionCategoryService.GetCategories(userName);
+
+                return View(model);
             }
             var transaction = _transactionService.AddTransaction(model);
 
@@ -69,10 +74,17 @@ namespace MyFinance.Controllers
 
             var accounts = await _accountService.GetAccountsAsync(userName);
 
-            ViewBag.Categories = categories;
-            ViewBag.Accounts = accounts;
+            var model = new CreateViewModel
+            {
+                Accounts = accounts,
+                Categories = categories
+            };
+            
 
-            return View();
+            //ViewBag.Categories = categories;
+            //ViewBag.Accounts = accounts;
+
+            return View(model);
         }
     }
 }

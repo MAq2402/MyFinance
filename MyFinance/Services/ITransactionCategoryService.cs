@@ -10,6 +10,7 @@ namespace MyFinance.Services
     {
         Task<IEnumerable<TransactionCategory>> GetCategories(string userName);
         Task<TransactionCategory> GetCategory(string userName, int id);
-        Task<TransactionCategory> AddCategoryAsync(Models.TransactionCategory.IndexViewModel model, string userName); 
+        Task<TransactionCategory> AddCategoryAsync(Models.TransactionCategory.IndexViewModel model, string userName);
+        Task AddDefaultCategoryAsync(string userName);
     }
 }

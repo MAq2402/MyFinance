@@ -12,5 +12,6 @@ namespace MyFinance.Services
         Task<IEnumerable<Account>> GetAccountsAsync(string userName);
         Task<Account> GetAccountAsync(string userName,int id);
         Task<Account> AddAccountAsync(IndexViewModel model,string userName);
+        Task AddDefaultAccountAsync(string userName); 
     }
 }

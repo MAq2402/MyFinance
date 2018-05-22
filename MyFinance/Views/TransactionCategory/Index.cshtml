@@ -21,14 +21,7 @@
         {
             <tr>
                 <td>@category.Name</td>
-                @{
-                    var dictionary = new Dictionary<string, string>
-                            {
-                                {"userName",User.Identity.Name },
-                                {"id",category.Id.ToString() }
-                            };
-                }
-                <td><a asp-action="Category" asp-controller="TransactionCategory" asp-all-route-data="dictionary"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></a></td>
+                <td><a asp-action="Category" asp-controller="TransactionCategory" asp-route-id="@category.Id.ToString()"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></a></td>
             </tr>
         }
     </table>

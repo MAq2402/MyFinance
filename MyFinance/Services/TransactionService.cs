@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MyFinance.Entities;
-using MyFinance.Extensions;
 using MyFinance.Models.Enums;
 using MyFinance.Models.Transaction;
 using MyFinance.Repositories;
@@ -38,7 +37,9 @@ namespace MyFinance.Services
                 isExpanse = false;
             }
 
-            var dateTime = new DateTime().GenerateFromString(model.DateTime);
+            var dateTime = new DateTime();
+
+            dateTime = DateTime.Parse(model.DateTime);
 
             var transaction = new Transaction
             {

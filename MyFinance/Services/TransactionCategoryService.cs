@@ -46,6 +46,16 @@ namespace MyFinance.Services
             return category;
         }
 
+        public async Task AddDefaultCategoryAsync(string userName)
+        {
+            var model = new MyFinance.Models.TransactionCategory.IndexViewModel
+            {
+                Name = "Domyślna"
+            };
+
+            await AddCategoryAsync(model, userName);
+        }
+
         public async Task<IEnumerable<TransactionCategory>> GetCategories(string userName)
         {
             var user = await _userManager.FindByNameAsync(userName);

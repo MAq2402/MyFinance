@@ -23,42 +23,48 @@
             <li id="li10" class="month" role="presentation"><a id="a10" asp-action="Index" asp-controller="Home" asp-route-monthNumber="10">Październik <span class="badge"></span></a></li>
             <li id="li11" class="month" role="presentation"><a id="a11" asp-action="Index" asp-controller="Home" asp-route-monthNumber="11">Listopad</a></li>
             <li id="li12" class="month" role="presentation"><a id="a12" asp-action="Index" asp-controller="Home" asp-route-monthNumber="12">Grudzień<span class="badge"></span></a></li>
+            <li class="navbar-right"><a asp-action="Create" asp-controller="Transaction">Dodaj transakcje</a></li>
         </ul>
     </div>
 </div>
 <div class="row">
     <div class="col-sm-6">
         <div class="panel-body">
-            <a asp-action="Create" asp-controller="Transaction">Dodaj transakcje</a>
-            <table class="table">
-                <tr>
-                    <th>Nazwa kategorii</th>
-                    <th>Suma (zł)</th>
-                    <th>Konto</th>
-                    <th>Rodzaj</th>
-                    <th>Data</th>
-                    <th>Szczegóły</th>
-                </tr>
-                @foreach (var transaction in Model.Transactions)
-                {
-                    <tr>
-                        <td>@transaction.Category.Name</td>
-                        <td>@transaction.Amount</td>
-                        <td>@transaction.Account.Name</td>
-                        @if (transaction.IsExpanse)
-                        {
-                            <td>Wydatek</td>
-                        }
-                        else
-                        {
-                            <td>Przychód</td>
-                        }
-                        <td>@transaction.DateTime.ToString("dd.MM.yyyy")</td>
-                        <td><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"> </span></td>
-                    </tr>
-                }
+            @if (Model.Transactions.Any())
+            {
 
-            </table>
+
+
+                <table class="table">
+                    <tr>
+                        <th>Nazwa kategorii</th>
+                        <th>Suma (zł)</th>
+                        <th>Konto</th>
+                        <th>Rodzaj</th>
+                        <th>Data</th>
+                        <th>Szczegóły</th>
+                    </tr>
+                    @foreach (var transaction in Model.Transactions)
+                    {
+                        <tr>
+                            <td>@transaction.Category.Name</td>
+                            <td>@transaction.Amount</td>
+                            <td>@transaction.Account.Name</td>
+                            @if (transaction.IsExpanse)
+                            {
+                                <td>Wydatek</td>
+                            }
+                            else
+                            {
+                                <td>Przychód</td>
+                            }
+                            <td>@transaction.DateTime.ToString("dd.MM.yyyy")</td>
+                            <td><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"> </span></td>
+                        </tr>
+                    }
+
+                </table>
+            }
         </div>
         <div class="col-sm-6">
             <canvas style="height:100px" id="myChart2"></canvas>
@@ -83,7 +89,7 @@
             datasets: [{
                 label: "My First dataset",
                 backgroundColor: ["rgb(255,99,132)", "rgb(66, 244, 101)"],
-                
+
                 data: [@Convert.ToInt32(Model.Expanses) ,@Convert.ToInt32(Model.Earnings)],
                 borderWidth: 0
             }]

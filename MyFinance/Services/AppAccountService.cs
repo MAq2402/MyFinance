@@ -45,6 +45,15 @@ namespace MyFinance.Services
             return account;
         }
 
+        public async Task AddDefaultAccountAsync(string userName)
+        {
+            var model = new MyFinance.Models.AppAccount.IndexViewModel
+            {
+                Name = "Domyślne"
+            };
+            await AddAccountAsync(model, userName);
+        }
+
         public async Task<Account> GetAccountAsync(string userName,int id)
         {
             var user = await _userManager.FindByNameAsync(userName);

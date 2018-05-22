@@ -186,7 +186,7 @@ namespace MyFinance.Tests
         }
 
         [Fact]
-        public void AddTransactionTest()
+        public void AddTransactionTest_ShouldWork()
         {
             //Arange
             var model = new CreateViewModel
@@ -222,9 +222,9 @@ namespace MyFinance.Tests
             Assert.Equal(expected.Description, actual.Description);
             Assert.Equal(expected.Amount, actual.Amount);
             Assert.Equal(expected.IsExpanse, actual.IsExpanse);
-               
-
+              
         }
+       
     }
 }
         

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MyFinance.Entities;
 using MyFinance.Models.Account;
+using MyFinance.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,11 +14,18 @@ namespace MyFinance.Controllers
     {
         private SignInManager<User> _signIngManager;
         private UserManager<User> _userManager;
+        private IAppAccountService _appAccountService;
+        private ITransactionCategoryService _categoryService;
 
-        public AccountController(SignInManager<User> signInManager, UserManager<User> userManager)
+        public AccountController(SignInManager<User> signInManager, 
+                                 UserManager<User> userManager,
+                                 IAppAccountService appAccountService,
+                                 ITransactionCategoryService categoryService)
         {
             _signIngManager = signInManager;
             _userManager = userManager;
+            _appAccountService = appAccountService;
+            _categoryService = categoryService;
         }
         [HttpGet]
         public IActionResult Login()
@@ -73,7 +81,12 @@ namespace MyFinance.Controllers
 
             if (result.Succeeded)
             {
+                await _appAccountService.AddDefaultAccountAsync(user.UserName);
+                await _categoryService.AddDefaultCategoryAsync(user.UserName);
+
                 await _signIngManager.SignInAsync(user, false);
+
+
 
                 return RedirectToAction("Index", "Home");
             }
