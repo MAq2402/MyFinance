@@ -194,7 +194,6 @@ namespace MyFinance.Tests
                 AccountId = 5,
                 CategoryId = 5,
                 DateTime = "24.02.1997",
-                Description = "haha",
                 Amount = 20,
                 Type = Models.Enums.TransactionType.Expanse
             };
@@ -210,7 +209,6 @@ namespace MyFinance.Tests
                 AccountId = 5,
                 CategoryId = 5,
                 DateTime = new DateTime(1997, 2, 24),
-                Description = "haha",
                 Amount = 20,
                 IsExpanse = true
             };
@@ -219,7 +217,6 @@ namespace MyFinance.Tests
             Assert.Equal(expected.AccountId, actual.AccountId);
             Assert.Equal(expected.CategoryId, actual.CategoryId);
             Assert.Equal(expected.DateTime, actual.DateTime);
-            Assert.Equal(expected.Description, actual.Description);
             Assert.Equal(expected.Amount, actual.Amount);
             Assert.Equal(expected.IsExpanse, actual.IsExpanse);
               

@@ -20,18 +20,21 @@ namespace MyFinance.Controllers
     public class AppAccountController : Controller
     {
         private IAppAccountService _accountService;
+        private ITransactionService _transactionService;
 
-        public AppAccountController(IAppAccountService accountService)
+        public AppAccountController(IAppAccountService accountService,ITransactionService transactionService)
         {
             _accountService = accountService;
+            _transactionService = transactionService;
         }
         
         public async Task<IActionResult> Index()
         {
-
+            var accounts = await _accountService.GetAccountsAsync(User.Identity.Name,true);
+     
             var model = new MyFinance.Models.AppAccount.IndexViewModel
             {
-                Accounts = await _accountService.GetAccountsAsync(User.Identity.Name)
+                Accounts = accounts
             };
 
             return View(model);
@@ -48,15 +51,15 @@ namespace MyFinance.Controllers
 
             var account = await _accountService.AddAccountAsync(modelFromBody, User.Identity.Name);
 
-            var modelToReturn = new AccountViewModel
+            var modelToReturn = new DetailViewModel
             {
                 Account = account
             };
-            return RedirectToAction("Account", "AppAccount", new { id = account.Id });
+            return RedirectToAction("Detail", "AppAccount", new { id = account.Id });
 
         }
         [HttpGet]
-        public async Task<IActionResult> Account(int id)
+        public async Task<IActionResult> Detail(int id)
         {
 
             var account = await _accountService.GetAccountAsync(User.Identity.Name,id);
@@ -66,11 +69,33 @@ namespace MyFinance.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            var model = new AccountViewModel
+            var model = new DetailViewModel
             {
-                Account = account
+                Account = account,
+                Transactions = _transactionService.GetTransactions(account.Id)
             };
 
+            return View(model);
+        }
+        public IActionResult Delete(int id)
+        {
+            _accountService.DeleteAccount(id);
+
+            return RedirectToAction("Index", "AppAccount");
+        }
+        [HttpPost]
+        public async Task<IActionResult> Detail(int id,MyFinance.Models.AppAccount.DetailViewModel model)
+        {
+            model.Account = await _accountService.GetAccountAsync(User.Identity.Name, id);
+            model.Transactions = _transactionService.GetTransactions(id);
+
+            if (!ModelState.IsValid)
+            {               
+                return View(model);
+            }
+
+            _accountService.UpdateAccount(id, model);
+            
             return View(model);
         }
     }

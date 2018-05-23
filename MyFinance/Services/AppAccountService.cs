@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using MyFinance.Entities;
 using MyFinance.Models.AppAccount;
 using MyFinance.Repositories;
@@ -54,6 +55,23 @@ namespace MyFinance.Services
             await AddAccountAsync(model, userName);
         }
 
+        public void DeleteAccount(int id)
+        {
+            var account = _accountRepository.GetSingleBy(a => a.Id == id);
+
+            if(account==null)
+            {
+                throw new Exception("Could not find account");
+            }
+
+            _accountRepository.Delete(account);
+
+            if(!_accountRepository.Save())
+            {
+                throw new Exception("Could not remove account");
+            }
+        }
+
         public async Task<Account> GetAccountAsync(string userName,int id)
         {
             var user = await _userManager.FindByNameAsync(userName);
@@ -66,7 +84,7 @@ namespace MyFinance.Services
             return _accountRepository.GetSingleBy(a => a.Id == id&&a.UserId==user.Id);
         }
 
-        public async Task<IEnumerable<Account>> GetAccountsAsync(string userName)
+        public async Task<IEnumerable<Account>> GetAccountsAsync(string userName,bool includeTransactions)
         {
 
             var user = await _userManager.FindByNameAsync(userName);
@@ -76,7 +94,28 @@ namespace MyFinance.Services
                 throw new Exception("Could not find user");
             }
 
-            return _accountRepository.GetBy(a=>a.UserId==user.Id);
+            if(includeTransactions)
+            {
+                return _accountRepository.GetBy(a => a.UserId == user.Id).Include(a => a.Transactions);
+            }
+            else
+            {
+                return _accountRepository.GetBy(a => a.UserId == user.Id);
+            }
+        }
+
+        public void UpdateAccount(int id, DetailViewModel model)
+        {
+            var account = _accountRepository.GetSingleBy(a => a.Id == id);
+
+            if (account == null)
+            {
+                throw new Exception("Could not find account");
+            }
+
+            account.Name = model.Name;
+
+            _accountRepository.Save();
         }
     }
 }

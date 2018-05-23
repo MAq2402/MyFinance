@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MyFinance.Entities;
+using MyFinance.Models.Enums;
 using MyFinance.Models.Transaction;
 using MyFinance.Services;
 
@@ -34,7 +35,7 @@ namespace MyFinance.Controllers
             {
                 var userName = User.Identity.Name;
 
-                model.Accounts = await _accountService.GetAccountsAsync(userName);
+                model.Accounts = await _accountService.GetAccountsAsync(userName,false);
                 model.Categories = await _transactionCategoryService.GetCategories(userName);
 
                 return View(model);
@@ -72,19 +73,80 @@ namespace MyFinance.Controllers
 
             var categories = await _transactionCategoryService.GetCategories(userName);
 
-            var accounts = await _accountService.GetAccountsAsync(userName);
+            var accounts = await _accountService.GetAccountsAsync(userName,false);
 
             var model = new CreateViewModel
             {
                 Accounts = accounts,
                 Categories = categories
             };
-            
-
-            //ViewBag.Categories = categories;
-            //ViewBag.Accounts = accounts;
 
             return View(model);
+        }
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var userName = User.Identity.Name;
+
+            var transaction = await _transactionService.GetTransactionAsync(userName, id);
+
+            if(transaction==null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var categories = await _transactionCategoryService.GetCategories(userName);
+
+            var accounts = await _accountService.GetAccountsAsync(userName,false);
+
+            TransactionType transactionType;
+            if (transaction.IsExpanse)
+            {
+                transactionType = TransactionType.Expanse;
+            }
+            else
+            {
+                transactionType = TransactionType.Earning;
+            }
+
+            var model = new MyFinance.Models.Transaction.EditViewModel
+            {
+                Categories = categories,
+                Accounts = accounts,
+                Amount = transaction.Amount,
+                DateTime = transaction.DateTime.ToString("dd.MM.yyyy"),
+                Type = transactionType,
+                AccountId = transaction.AccountId,
+                CategoryId = transaction.CategoryId,
+                Id=id
+            };
+
+            return View(model);
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditViewModel model,int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                var userName = User.Identity.Name;
+
+                model.Accounts = await _accountService.GetAccountsAsync(userName,false);
+                model.Categories = await _transactionCategoryService.GetCategories(userName);
+
+                return View(model);
+            }
+            _transactionService.UpdateTransaction(model,id);
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult Delete(int id)
+        {
+            _transactionService.DeleteTransaction(id);
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }

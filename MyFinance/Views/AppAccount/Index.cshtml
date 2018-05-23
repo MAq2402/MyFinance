@@ -16,7 +16,7 @@
             <th>Saldo</th>
             <th>Zablokowane</th>
             <th>Ilość transakcji</th>
-            <th>Szczegóły</th>
+            <th></th>
         </tr>
         @foreach (var account in Model.Accounts)
         {
@@ -32,14 +32,11 @@
                     <td>Nie</td>
                 }
                 <td>@account.Transactions.Count</td>
-                @{
-                    var dictionary = new Dictionary<string, string>
-                            {
-                                {"userName",User.Identity.Name },
-                                {"id",account.Id.ToString() }
-                            };
-                }
-                <td><a asp-action="Account" asp-controller="AppAccount" asp-all-route-data="dictionary"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></a></td>
+                <td>
+                    <a asp-action="Detail" asp-controller="AppAccount" asp-route-id="@account.Id"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></a>
+                    <a asp-action="Edit" asp-controller="AppAccount" asp-route-id="@account.Id">edit</a>
+                    <a asp-action="Delete" asp-controller="AppAccount" asp-route-id="@account.Id">delete</a>
+                </td>
             </tr>
         }
     </table>

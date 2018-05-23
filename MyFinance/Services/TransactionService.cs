@@ -46,7 +46,6 @@ namespace MyFinance.Services
                 AccountId = model.AccountId,
                 Amount = model.Amount,
                 CategoryId = model.CategoryId,
-                Description = model.Description,
                 IsExpanse = isExpanse,
                 DateTime = dateTime
             };
@@ -111,6 +110,55 @@ namespace MyFinance.Services
                 }
             }
             return expanses;
+        }
+
+        public void UpdateTransaction(EditViewModel model, int id)
+        {
+            var transaction = _transactionRepository.GetSingleBy(t => t.Id == id);
+
+            if(transaction==null)
+            {
+                throw new Exception("Transaction does not exist");
+            }
+
+            transaction.AccountId = model.AccountId;
+            transaction.Amount = model.Amount;
+            transaction.CategoryId = model.CategoryId;
+            transaction.DateTime = DateTime.Parse(model.DateTime);
+
+            if(model.Type==TransactionType.Earning)
+            {
+                transaction.IsExpanse = false;
+            }
+            else
+            {
+                transaction.IsExpanse = true;
+            }
+
+            _transactionRepository.Save();
+        }
+
+        public void DeleteTransaction(int id)
+        {
+            var transaction = _transactionRepository.GetSingleBy(t => t.Id == id);
+
+            if(transaction==null)
+            {
+                throw new Exception("Could not find transaction");
+            }
+
+            _transactionRepository.Delete(transaction);
+
+            if(!_transactionRepository.Save())
+            {
+                throw new Exception("Could not delete transaction");
+            }
+        }
+
+        public IEnumerable<Transaction> GetTransactions(int accountId)
+        {
+            return _transactionRepository.GetBy(t => t.AccountId == accountId)
+                                         .Include(t=>t.Category);
         }
     }
 }

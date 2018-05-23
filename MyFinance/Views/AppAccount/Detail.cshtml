@@ -1,0 +1,50 @@
+﻿@model MyFinance.Models.AppAccount.DetailViewModel
+@{
+
+}
+<form asp-action="Detail" method="post">
+    <h2><input asp-for="@Model.Name" value="@Model.Account.Name"  /></h2>
+    <input class="btn btn-success" type="submit" value="Zmień nazwe"/>
+</form>
+<div class="row">
+    <div class="col-sm-6">
+        <div class="panel-body">
+            @if (Model.Transactions.Any())
+            {
+                <table class="table">
+                    <tr>
+                        <th>Nazwa kategorii</th>
+                        <th>Suma (zł)</th>
+                        <th>Konto</th>
+                        <th>Rodzaj</th>
+                        <th>Data</th>
+                        <th>Szczegóły</th>
+                    </tr>
+                    @foreach (var transaction in Model.Transactions)
+                    {
+                        <tr>
+                            <td>@transaction.Category.Name</td>
+                            <td>@transaction.Amount</td>
+                            <td>@transaction.Account.Name</td>
+                            @if (transaction.IsExpanse)
+                            {
+                                <td>Wydatek</td>
+                            }
+                            else
+                            {
+                                <td>Przychód</td>
+                            }
+                            <td>@transaction.DateTime.ToString("dd.MM.yyyy")</td>
+                            <td>
+                                <a asp-action="Edit" asp-controller="Transaction" asp-route-id="@transaction.Id"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"> </span></a>
+                                <a asp-action="Delete" asp-controller="Transaction" asp-route-id="@transaction.Id">Usuń</a>
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+            }
+        </div>
+    </div>
+</div>
+

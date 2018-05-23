@@ -63,10 +63,6 @@ namespace MyFinance
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            AutoMapper.Mapper.Initialize(cfg =>
-            {
-                
-            });
 
             app.UseStaticFiles();
 

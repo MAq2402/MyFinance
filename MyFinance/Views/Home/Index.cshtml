@@ -32,9 +32,6 @@
         <div class="panel-body">
             @if (Model.Transactions.Any())
             {
-
-
-
                 <table class="table">
                     <tr>
                         <th>Nazwa kategorii</th>
@@ -59,7 +56,10 @@
                                 <td>Przychód</td>
                             }
                             <td>@transaction.DateTime.ToString("dd.MM.yyyy")</td>
-                            <td><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"> </span></td>
+                            <td>
+                                <a asp-action="Edit" asp-controller="Transaction" asp-route-id="@transaction.Id"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"> </span></a>
+                                <a asp-action="Delete" asp-controller="Transaction" asp-route-id="@transaction.Id">Usuń</a>
+                            </td>
                         </tr>
                     }
 
