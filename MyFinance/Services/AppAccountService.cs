@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using MyFinance.Entities;
 using MyFinance.Models.AppAccount;
+using MyFinance.Models.Enums;
+using MyFinance.Models.Transaction;
 using MyFinance.Repositories;
 using System;
 using System.Collections.Generic;
@@ -14,11 +16,15 @@ namespace MyFinance.Services
     {
         private IRepository<Account> _accountRepository;
         private UserManager<User> _userManager;
+        private IRepository<Transaction> _transactionRepository;
 
-        public AppAccountService(IRepository<Account> accountRepository,UserManager<User> userManager)
+        public AppAccountService(IRepository<Account> accountRepository,
+                                UserManager<User> userManager,
+                                IRepository<Transaction> transactionRepository)
         {
             _accountRepository = accountRepository;
             _userManager = userManager;
+            _transactionRepository = transactionRepository;
         }
 
         public async Task<Account> AddAccountAsync(IndexViewModel model,string userName)
@@ -72,6 +78,36 @@ namespace MyFinance.Services
             }
         }
 
+        public void DeleteTransaction(Transaction transaction)
+        {
+            var account = _accountRepository.GetSingleBy(a => a.Id == transaction.AccountId);
+
+            if(account==null)
+            {
+                throw new Exception("Account does not exist");
+            }
+            if(transaction.IsExpanse)
+            {
+                account.Amount += transaction.Amount;
+            }
+            else
+            {
+                account.Amount -= transaction.Amount;
+            }
+            
+
+            account.Transactions.Remove(transaction);
+
+            if(!_accountRepository.Save())
+            {
+                throw new Exception("Could not delete transaction in account");
+            }
+
+
+
+
+        }
+
         public async Task<Account> GetAccountAsync(string userName,int id)
         {
             var user = await _userManager.FindByNameAsync(userName);
@@ -116,6 +152,31 @@ namespace MyFinance.Services
             account.Name = model.Name;
 
             _accountRepository.Save();
+        }
+
+        public bool UpdateAmount(TransactionInputModel model)
+        {
+            var account = _accountRepository.GetSingleBy(a => a.Id == model.AccountId);
+
+            if (account == null)
+            {
+                throw new Exception("Account does not exist");
+            }
+
+            if (model.Type==TransactionType.Expanse)
+            {
+                if (model.Amount > account.Amount)
+                {
+                    return false;
+                }
+                account.Amount -= model.Amount;
+            }
+            else
+            {
+                account.Amount += model.Amount;
+            }
+
+            return true;
         }
     }
 }

@@ -14,7 +14,7 @@ namespace MyFinance.Services
         Transaction AddTransaction(CreateViewModel model);
         decimal CalculateEarnings(IEnumerable<Transaction> transactions);
         decimal CalculateExpanses(IEnumerable<Transaction> transactions);
-        void UpdateTransaction(EditViewModel model,int id);
+        Transaction UpdateTransaction(EditViewModel model,int id);
         void DeleteTransaction(int id);
         IEnumerable<Transaction> GetTransactions(int accountId);
     }

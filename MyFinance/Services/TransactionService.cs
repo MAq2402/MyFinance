@@ -50,6 +50,7 @@ namespace MyFinance.Services
                 DateTime = dateTime
             };
             _transactionRepository.Add(transaction);
+            
 
             if(!_transactionRepository.Save())
             {
@@ -112,7 +113,7 @@ namespace MyFinance.Services
             return expanses;
         }
 
-        public void UpdateTransaction(EditViewModel model, int id)
+        public Transaction UpdateTransaction(EditViewModel model, int id)
         {
             var transaction = _transactionRepository.GetSingleBy(t => t.Id == id);
 
@@ -136,6 +137,8 @@ namespace MyFinance.Services
             }
 
             _transactionRepository.Save();
+
+            return transaction;
         }
 
         public void DeleteTransaction(int id)

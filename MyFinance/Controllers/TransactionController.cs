@@ -40,6 +40,17 @@ namespace MyFinance.Controllers
 
                 return View(model);
             }
+
+            if (!_accountService.UpdateAmount(model))
+            {
+                ModelState.AddModelError("", "Na koncie brakuje srodków, aby wykonać transakcje");
+                var userName = User.Identity.Name;
+
+                model.Accounts = await _accountService.GetAccountsAsync(userName, false);
+                model.Categories = await _transactionCategoryService.GetCategories(userName);
+                return View(model);
+            }
+
             var transaction = _transactionService.AddTransaction(model);
 
             if (transaction == null)
@@ -99,6 +110,8 @@ namespace MyFinance.Controllers
 
             var accounts = await _accountService.GetAccountsAsync(userName,false);
 
+            
+
             TransactionType transactionType;
             if (transaction.IsExpanse)
             {
@@ -137,14 +150,28 @@ namespace MyFinance.Controllers
 
                 return View(model);
             }
-            _transactionService.UpdateTransaction(model,id);
+
+            if (!_accountService.UpdateAmount(model))
+            {
+                ModelState.AddModelError("", "Na koncie brakuje srodków, aby wykonać transakcje");
+                var userName = User.Identity.Name;
+
+                model.Accounts = await _accountService.GetAccountsAsync(userName, false);
+                model.Categories = await _transactionCategoryService.GetCategories(userName);
+
+                return View(model);
+            }
+
+            var transaction = _transactionService.UpdateTransaction(model,id);
 
             return RedirectToAction("Index", "Home");
         }
 
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            _transactionService.DeleteTransaction(id);
+            var transaction = await _transactionService.GetTransactionAsync(User.Identity.Name, id);
+
+            _accountService.DeleteTransaction(transaction);
 
             return RedirectToAction("Index", "Home");
         }
