@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using MyFinance.Entities;
 using MyFinance.Models.TransactionCategory;
 using MyFinance.Repositories;
@@ -65,7 +66,8 @@ namespace MyFinance.Services
                 throw new Exception("Could not find user");
             }
 
-            return _categoryRepository.GetBy(c => c.UserId == user.Id);
+            return _categoryRepository.GetBy(c => c.UserId == user.Id)
+                                      .Include(c=>c.Transactions);
         }
 
         public async Task<TransactionCategory> GetCategory(string userName, int id)

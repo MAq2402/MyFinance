@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Authorization;
 using AutoMapper;
 using MyFinance.Entities;
 using Microsoft.EntityFrameworkCore;
-using MyFinance.Filters;
 using MyFinance.Services;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -68,11 +67,14 @@ namespace MyFinance.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+            var transactions = _transactionService.GetTransactionsByAccount(account.Id);
 
             var model = new DetailViewModel
             {
                 Account = account,
-                Transactions = _transactionService.GetTransactions(account.Id)
+                Transactions = transactions,
+                 Earnings = _transactionService.CalculateEarnings(transactions),
+                 Expanses = _transactionService.CalculateExpanses(transactions)              
             };
 
             return View(model);
@@ -87,7 +89,7 @@ namespace MyFinance.Controllers
         public async Task<IActionResult> Detail(int id,MyFinance.Models.AppAccount.DetailViewModel model)
         {
             model.Account = await _accountService.GetAccountAsync(User.Identity.Name, id);
-            model.Transactions = _transactionService.GetTransactions(id);
+            model.Transactions = _transactionService.GetTransactionsByCategory(id);
 
             if (!ModelState.IsValid)
             {               

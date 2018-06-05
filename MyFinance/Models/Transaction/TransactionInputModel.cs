@@ -9,7 +9,7 @@ namespace MyFinance.Models.Transaction
 {
     public class TransactionInputModel
     {
-        [Required, Display(Name = "Suma")]
+        [Required(ErrorMessage ="Uzupełnij sumę"), Display(Name = "Suma")]
         public decimal Amount { get; set; }
         [Required, Display(Name = "Typ")]
         public TransactionType Type { get; set; }
@@ -17,7 +17,7 @@ namespace MyFinance.Models.Transaction
         public int CategoryId { get; set; }
         [Required, Display(Name = "Konto")]
         public int AccountId { get; set; }
-        [Required, Display(Name = "Data")]
+        [Required(ErrorMessage = "Uzupełnij datę"), Display(Name = "Data")]
         public string DateTime { get; set; }
     }
 }

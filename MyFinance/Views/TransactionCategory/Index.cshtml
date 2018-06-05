@@ -1,27 +1,43 @@
 ﻿@model MyFinance.Models.TransactionCategory.IndexViewModel
-@{ 
+@{
     ViewBag.Title = "Konta";
-    
+
 }
 
 <div class="panel panel-default">
     <!-- Default panel contents -->
 
-    <div class="panel-heading">Twoje konta</div>
+    <div class="panel-heading">Twoje kateogorie</div>
     @await Component.InvokeAsync("AddCategory")
     <table class="table">
         <tr>
             <th>Nazwa</th>
             <th>Saldo</th>
-            <th>Zablokowane</th>
             <th>Ilość transakcji</th>
+            <th>Ostatnia transakcja</th>
             <th>Szczegóły</th>
         </tr>
         @foreach (var category in Model.Categories)
         {
             <tr>
                 <td>@category.Name</td>
-                <td><a asp-action="Category" asp-controller="TransactionCategory" asp-route-id="@category.Id.ToString()"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></a></td>
+                @{ 
+                    var balance = category.Transactions.Where(t => t.IsExpanse == false).Sum(t => t.Amount) - category.Transactions.Where(t => t.IsExpanse == true).Sum(t => t.Amount);
+                }
+                <td>@balance</td>
+                <td>@category.Transactions.Count</td>
+                @if (category.Transactions.Any())
+                {
+                    <td>@category.Transactions.Max(t => t.DateTime).ToString("dd.MM.yyyy")</td>
+                }
+                else
+                {
+                    <td>Brak</td>
+                }
+
+                <td>
+                    <a asp-action="Detail" asp-controller="TransactionCategory" asp-route-id="@category.Id"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></a>
+                </td>
             </tr>
         }
     </table>

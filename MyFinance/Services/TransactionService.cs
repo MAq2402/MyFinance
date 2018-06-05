@@ -158,10 +158,16 @@ namespace MyFinance.Services
             }
         }
 
-        public IEnumerable<Transaction> GetTransactions(int accountId)
+        public IEnumerable<Transaction> GetTransactionsByAccount(int accountId)
         {
             return _transactionRepository.GetBy(t => t.AccountId == accountId)
                                          .Include(t=>t.Category);
+        }
+
+        public IEnumerable<Transaction> GetTransactionsByCategory(int categoryId)
+        {
+            return _transactionRepository.GetBy(t => t.CategoryId == categoryId)
+                                         .Include(t => t.Account);
         }
     }
 }

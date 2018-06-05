@@ -1,4 +1,4 @@
-﻿@model MyFinance.Models.AppAccount.DetailViewModel
+﻿@model MyFinance.Models.TransactionCategory.DetailViewModel
 @{
 
 }
@@ -6,8 +6,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
 </head>
-<button asp-action="Delete" asp-controller="AppAccount" class="btn btn-danger btn-lg">Usuń Konto</button>
-<h3>Transakcje konta: @Model.Account.Name</h3>
+<button asp-action="Delete" asp-controller="TransactionCateogry" class="btn btn-danger btn-lg">Usuń Kategorie</button>
+<h3>Transakcje konta: @Model.Category.Name</h3>
 <div class="row">
     <div class="col-sm-6">
         <div class="panel-body">

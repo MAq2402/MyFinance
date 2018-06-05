@@ -1,7 +1,7 @@
 ﻿@model MyFinance.Models.AppAccount.IndexViewModel
-@{ 
+@{
     ViewBag.Title = "Konta";
-    
+
 }
 
 <div class="panel panel-default">
@@ -14,28 +14,27 @@
         <tr>
             <th>Nazwa</th>
             <th>Saldo</th>
-            <th>Zablokowane</th>
             <th>Ilość transakcji</th>
-            <th></th>
+            <th>Ostatnia transakcja</th>
+            <th>Szczegóły</th>
         </tr>
         @foreach (var account in Model.Accounts)
         {
             <tr>
                 <td>@account.Name</td>
                 <td>@account.Amount</td>
-                @if (account.IsBlocked)
+                <td>@account.Transactions.Count</td>
+                @if (account.Transactions.Any())
                 {
-                    <td>Tak</td>
+                    <td>@account.Transactions.Max(t=>t.DateTime).ToString("dd.MM.yyyy")</td>
                 }
                 else
                 {
-                    <td>Nie</td>
+                    <td>Brak</td>
                 }
-                <td>@account.Transactions.Count</td>
+
                 <td>
                     <a asp-action="Detail" asp-controller="AppAccount" asp-route-id="@account.Id"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></a>
-                    <a asp-action="Edit" asp-controller="AppAccount" asp-route-id="@account.Id">edit</a>
-                    <a asp-action="Delete" asp-controller="AppAccount" asp-route-id="@account.Id">delete</a>
                 </td>
             </tr>
         }

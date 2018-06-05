@@ -16,6 +16,8 @@ namespace MyFinance.Services
         decimal CalculateExpanses(IEnumerable<Transaction> transactions);
         Transaction UpdateTransaction(EditViewModel model,int id);
         void DeleteTransaction(int id);
-        IEnumerable<Transaction> GetTransactions(int accountId);
+        IEnumerable<Transaction> GetTransactionsByCategory(int categoryId);
+
+        IEnumerable<Transaction> GetTransactionsByAccount(int accountId);
     }
 }

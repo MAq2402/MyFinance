@@ -6,16 +6,21 @@
     <link href="~/css/Home-Create.css" rel="stylesheet" />
     <link href="~/lib/bootstrap-datepicker/dist/css/bootstrap-datepicker.css" rel="stylesheet" />
     <link href="~/lib/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css" rel="stylesheet" />
+    <link href="~/css/ValidationDiv.css" rel="stylesheet" />
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
 </head>
+
 <div class="row">
+
     <div class="col-sm-3">
     </div>
+    
     <div class="panel panel-success col-sm-6">
+
         <div class="panel-heading">Dodaj transakcje</div>
         <div class="panel-body">
-            <form  asp-action="Edit" asp-route-id="@Model.Id" asp-controller="Transaction">
+            <form asp-action="Edit" asp-route-id="@Model.Id" asp-controller="Transaction">
                 <div class="form-group row">
                     <div class="col-sm-6">
                         <label asp-for="@Model.Amount"></label>
@@ -38,21 +43,23 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label asp-for="@Model.DateTime"></label>
-                    <div class="input-group date">
+                    <div class="col-sm-6">
+                        <label asp-for="@Model.DateTime"></label>
+                        <div class="input-group date">
 
-                        <input asp-for="@Model.DateTime" type="text" class="form-control datepicker"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                            <input asp-for="@Model.DateTime" type="text" class="form-control datepicker" autocomplete="off"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                        </div>
                     </div>
 
-
+                    <div class="col-sm-6 btnDiv">
+                        <input class="btn btn-success" type="submit" value="Dodaj" />
+                    </div>
                 </div>
-                <div class="form-group">
-                    <input class="btn btn-success" type="submit" value="Dodaj" />
-                </div>
-                <div asp-validation-summary="ModelOnly">
-
-                </div>
+               
             </form>
+            <div class="validationDiv" asp-validation-summary="All">
+
+            </div>
         </div>
 
     </div>
