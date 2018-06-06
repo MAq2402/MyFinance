@@ -16,16 +16,20 @@ namespace MyFinance.Controllers
     {
         private ITransactionCategoryService _categoryService;
         private ITransactionService _transactionService;
+        private IAppAccountService _appAccountService;
 
-        public TransactionCategoryController(ITransactionCategoryService categoryService, ITransactionService transactionService)
+        public TransactionCategoryController(ITransactionCategoryService categoryService, 
+                                             ITransactionService transactionService,
+                                             IAppAccountService appAccountService)
         {
             _categoryService = categoryService;
             _transactionService = transactionService;
+            _appAccountService = appAccountService;
         }
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var categories = await _categoryService.GetCategories(User.Identity.Name);
+            var categories = await _categoryService.GetCategoriesAsync(User.Identity.Name);
 
             var model = new MyFinance.Models.TransactionCategory.IndexViewModel
             {
@@ -37,7 +41,7 @@ namespace MyFinance.Controllers
 
         public async Task<IActionResult> Detail(int id)
         {
-            var category = await _categoryService.GetCategory(User.Identity.Name, id);
+            var category = await _categoryService.GetCategoryAsync(User.Identity.Name, id);
 
             if (category == null)
             {
@@ -71,8 +75,24 @@ namespace MyFinance.Controllers
             {
                 Category = category
             };
-            return RedirectToAction("Category", "TransactionCategory", new { id = category.Id });
+            return RedirectToAction("Detail", "TransactionCategory", new { id = category.Id });
 
+        }
+        public async Task<IActionResult> Delete(int id)
+        {
+            var category = await _categoryService.GetCategoryAsync(User.Identity.Name, id);
+
+            if(category==null)
+            {
+                return RedirectToAction("Index", "TransactionCategory");
+            }
+            var transactions = _transactionService.GetTransactionsByCategory(category.Id);
+
+            _appAccountService.UpdateAmountsOfAccounts(transactions);
+
+            _categoryService.DeleteCategory(category);
+
+            return RedirectToAction("Index", "TransactionCategory");
         }
     }
 }

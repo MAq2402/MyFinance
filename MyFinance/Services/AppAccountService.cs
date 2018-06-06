@@ -154,6 +154,21 @@ namespace MyFinance.Services
             _accountRepository.Save();
         }
 
+        public void UpdateAmountsOfAccounts(IEnumerable<Transaction> transactions)
+        {
+            foreach(var transaction in transactions)
+            {
+                if (transaction.IsExpanse)
+                {
+                    transaction.Account.Amount += transaction.Amount;
+                }
+                else
+                {
+                    transaction.Account.Amount -= transaction.Amount;
+                }
+            }
+        }
+
         public bool UpdateAmount(TransactionInputModel model)
         {
             var account = _accountRepository.GetSingleBy(a => a.Id == model.AccountId);

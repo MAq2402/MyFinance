@@ -6,7 +6,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
 </head>
-<button asp-action="Delete" asp-controller="TransactionCateogry" class="btn btn-danger btn-lg">Usuń Kategorie</button>
+<a asp-action="Delete" asp-controller="TransactionCategory" asp-route-id="@Model.Category.Id" class="btn btn-danger btn-lg">Usuń Kategorie</a>
 <h3>Transakcje konta: @Model.Category.Name</h3>
 <div class="row">
     <div class="col-sm-6">

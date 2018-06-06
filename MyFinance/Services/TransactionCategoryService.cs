@@ -57,7 +57,17 @@ namespace MyFinance.Services
             await AddCategoryAsync(model, userName);
         }
 
-        public async Task<IEnumerable<TransactionCategory>> GetCategories(string userName)
+        public void DeleteCategory(TransactionCategory category)
+        {
+            _categoryRepository.Delete(category);
+
+            if (!_categoryRepository.Save())
+            {
+                throw new Exception("Could not remove category");
+            }
+        }
+
+        public async Task<IEnumerable<TransactionCategory>> GetCategoriesAsync(string userName)
         {
             var user = await _userManager.FindByNameAsync(userName);
 
@@ -70,7 +80,7 @@ namespace MyFinance.Services
                                       .Include(c=>c.Transactions);
         }
 
-        public async Task<TransactionCategory> GetCategory(string userName, int id)
+        public async Task<TransactionCategory> GetCategoryAsync(string userName, int id)
         {
             var user = await _userManager.FindByNameAsync(userName);
 

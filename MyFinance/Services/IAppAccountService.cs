@@ -19,5 +19,6 @@ namespace MyFinance.Services
         void UpdateAccount(int id, DetailViewModel model);
         bool UpdateAmount(TransactionInputModel model);
         void DeleteTransaction(Transaction transaction);
+        void UpdateAmountsOfAccounts(IEnumerable<Transaction> transactions);
     }
 }

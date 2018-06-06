@@ -36,7 +36,19 @@ namespace MyFinance.Controllers
                 var userName = User.Identity.Name;
 
                 model.Accounts = await _accountService.GetAccountsAsync(userName,false);
-                model.Categories = await _transactionCategoryService.GetCategories(userName);
+                model.Categories = await _transactionCategoryService.GetCategoriesAsync(userName);
+
+                return View(model);
+            }
+            var outDateTime = new DateTime();
+
+            if(!DateTime.TryParse(model.DateTime, out outDateTime))
+            {
+                ModelState.AddModelError("", "Wprowadź poprawną datę");
+                var userName = User.Identity.Name;
+
+                model.Accounts = await _accountService.GetAccountsAsync(userName, false);
+                model.Categories = await _transactionCategoryService.GetCategoriesAsync(userName);
 
                 return View(model);
             }
@@ -47,7 +59,7 @@ namespace MyFinance.Controllers
                 var userName = User.Identity.Name;
 
                 model.Accounts = await _accountService.GetAccountsAsync(userName, false);
-                model.Categories = await _transactionCategoryService.GetCategories(userName);
+                model.Categories = await _transactionCategoryService.GetCategoriesAsync(userName);
                 return View(model);
             }
 
@@ -82,7 +94,7 @@ namespace MyFinance.Controllers
         {
             var userName = User.Identity.Name;
 
-            var categories = await _transactionCategoryService.GetCategories(userName);
+            var categories = await _transactionCategoryService.GetCategoriesAsync(userName);
 
             var accounts = await _accountService.GetAccountsAsync(userName,false);
 
@@ -106,7 +118,7 @@ namespace MyFinance.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            var categories = await _transactionCategoryService.GetCategories(userName);
+            var categories = await _transactionCategoryService.GetCategoriesAsync(userName);
 
             var accounts = await _accountService.GetAccountsAsync(userName,false);
 
@@ -146,7 +158,7 @@ namespace MyFinance.Controllers
                 var userName = User.Identity.Name;
 
                 model.Accounts = await _accountService.GetAccountsAsync(userName,false);
-                model.Categories = await _transactionCategoryService.GetCategories(userName);
+                model.Categories = await _transactionCategoryService.GetCategoriesAsync(userName);
 
                 return View(model);
             }
@@ -157,7 +169,7 @@ namespace MyFinance.Controllers
                 var userName = User.Identity.Name;
 
                 model.Accounts = await _accountService.GetAccountsAsync(userName, false);
-                model.Categories = await _transactionCategoryService.GetCategories(userName);
+                model.Categories = await _transactionCategoryService.GetCategoriesAsync(userName);
 
                 return View(model);
             }
@@ -170,6 +182,11 @@ namespace MyFinance.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var transaction = await _transactionService.GetTransactionAsync(User.Identity.Name, id);
+
+            if(transaction==null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
 
             _accountService.DeleteTransaction(transaction);
 

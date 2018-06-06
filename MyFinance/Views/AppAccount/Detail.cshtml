@@ -6,7 +6,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
 </head>
-<button asp-action="Delete" asp-controller="AppAccount" class="btn btn-danger btn-lg">Usuń Konto</button>
+<a asp-action="Delete" asp-controller="AppAccount" asp-route-id="@Model.Account.Id" class="btn btn-danger btn-lg">Usuń Konto</a>
 <h3>Transakcje konta: @Model.Account.Name</h3>
 <div class="row">
     <div class="col-sm-6">

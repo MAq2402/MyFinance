@@ -11,5 +11,6 @@ namespace MyFinance.Models.Home
         public IEnumerable<Entities.Transaction> Transactions { get; set; }
         public decimal Earnings { get; set; }
         public decimal Expanses { get; set; }
+        public int Year { get; set; }
     }
 }

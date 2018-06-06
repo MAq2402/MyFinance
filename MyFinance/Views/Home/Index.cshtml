@@ -4,8 +4,11 @@
 }
 <head>
     <link href="~/css/Home-Index.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap-datepicker/dist/css/bootstrap-datepicker.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css" rel="stylesheet" />
     <script src="~/lib/jquery/dist/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+    <script src="~/lib/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
 
 </head>
 <div class="panel panel-success">
@@ -23,6 +26,8 @@
             <li id="li10" class="month" role="presentation"><a id="a10" asp-action="Index" asp-controller="Home" asp-route-monthNumber="10">Październik <span class="badge"></span></a></li>
             <li id="li11" class="month" role="presentation"><a id="a11" asp-action="Index" asp-controller="Home" asp-route-monthNumber="11">Listopad</a></li>
             <li id="li12" class="month" role="presentation"><a id="a12" asp-action="Index" asp-controller="Home" asp-route-monthNumber="12">Grudzień<span class="badge"></span></a></li>
+            <li><input type="text" class="datepicker" autocomplete="off" value="@DateTime.Now.Year"></li>
+            <li><a></a></li>
             <li class="navbar-right"><a asp-action="Create" asp-controller="Transaction">Dodaj transakcje</a></li>
         </ul>
     </div>
@@ -94,6 +99,15 @@
 
         // Configuration options go here
         options: {}
+    });
+</script>
+<script>
+    $('.datepicker').datepicker({
+        format: "yyyy",
+        viewMode: "years",
+        minViewMode: "years",
+        orientation: "bottom auto"
+
     });
 </script>
 

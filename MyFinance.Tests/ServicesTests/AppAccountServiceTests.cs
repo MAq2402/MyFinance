@@ -122,5 +122,88 @@ namespace MyFinance.Tests.ServicesTests
             //Assert
             Assert.Equal(expected, actual);
         }
+
+        [Fact]
+        public void UpdateAmountsOfAccounts_Test()
+        {
+            //Arange
+           
+            var account1 = new Account
+            {
+                Amount = 500
+            };
+            var account2 = new Account
+            {
+                Amount = 400
+            };
+
+            var transactions = new List<Transaction>
+            {
+                new Transaction
+                {
+                    Amount = 50,
+                    IsExpanse = true,
+                    Account = account1
+                },
+                new Transaction
+                {
+                    Amount = 50,
+                    IsExpanse = true,
+                    Account = account1
+                },
+                new Transaction
+                {
+                    Amount = 20,
+                    IsExpanse = false,
+                    Account = account1
+                },
+                new Transaction
+                {
+                    Amount = 20,
+                    IsExpanse = false,
+                    Account = account1
+                },
+                 new Transaction
+                {
+                    Amount = 50,
+                    IsExpanse = false,
+                    Account = account2
+                },
+                new Transaction
+                {
+                    Amount = 50,
+                    IsExpanse = false,
+                    Account = account2
+                },
+                new Transaction
+                {
+                    Amount = 20,
+                    IsExpanse = true,
+                    Account = account2
+                },
+                new Transaction
+                {
+                    Amount = 20,
+                    IsExpanse = true,
+                    Account = account2
+                }
+            };
+
+            var accountService = new AppAccountService(mockedAccountRepository.Object, 
+                                                       mockedUserManager.Object, 
+                                                       mockedTransactionRepository.Object);
+            //Act
+            accountService.UpdateAmountsOfAccounts(transactions);
+
+            var actual1 = account1.Amount;
+            var actual2 = account2.Amount;
+
+            var expected1 = 560;
+            var expected2 = 340;
+
+            //Assert
+            Assert.Equal(expected1, actual1);
+            Assert.Equal(expected2, actual2);
+        }
     }
 }
