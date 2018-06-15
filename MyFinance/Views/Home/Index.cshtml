@@ -14,21 +14,24 @@
 <div class="panel panel-success">
     <div class="panel-heading">
         <ul id="months" class="nav nav-pills" role="tablist">
-            <li id="li1" class="month" role="presentation"><a id="a1" asp-action="Index" asp-controller="Home" asp-route-monthNumber="1">Styczeń <span class="badge"></span></a></li>
-            <li id="li2" class="month" role="presentation"><a id="a2" asp-action="Index" asp-controller="Home" asp-route-monthNumber="2">Luty</a></li>
-            <li id="li3" class="month" role="presentation"><a id="a3" asp-action="Index" asp-controller="Home" asp-route-monthNumber="3">Marzec<span class="badge"></span></a></li>
-            <li id="li4" class="month" role="presentation"><a id="a4" asp-action="Index" asp-controller="Home" asp-route-monthNumber="4">Kwiecień <span class="badge"></span></a></li>
-            <li id="li5" class="month" role="presentation"><a id="a5" asp-action="Index" asp-controller="Home" asp-route-monthNumber="5">Maj</a></li>
-            <li id="li6" class="month" role="presentation"><a id="a6" asp-action="Index" asp-controller="Home" asp-route-monthNumber="6">Czerwiec<span class="badge"></span></a></li>
-            <li id="li7" class="month" role="presentation"><a id="a7" asp-action="Index" asp-controller="Home" asp-route-monthNumber="7">Lipiec <span class="badge"></span></a></li>
-            <li id="li8" class="month" role="presentation"><a id="a8" asp-action="Index" asp-controller="Home" asp-route-monthNumber="8">Sierpień</a></li>
-            <li id="li9" class="month" role="presentation"><a id="a9" asp-action="Index" asp-controller="Home" asp-route-monthNumber="9">Wrzesień<span class="badge"></span></a></li>
-            <li id="li10" class="month" role="presentation"><a id="a10" asp-action="Index" asp-controller="Home" asp-route-monthNumber="10">Październik <span class="badge"></span></a></li>
-            <li id="li11" class="month" role="presentation"><a id="a11" asp-action="Index" asp-controller="Home" asp-route-monthNumber="11">Listopad</a></li>
-            <li id="li12" class="month" role="presentation"><a id="a12" asp-action="Index" asp-controller="Home" asp-route-monthNumber="12">Grudzień<span class="badge"></span></a></li>
-            <li><input type="text" class="datepicker" autocomplete="off" value="@DateTime.Now.Year"></li>
-            <li><a></a></li>
-            <li class="navbar-right"><a asp-action="Create" asp-controller="Transaction">Dodaj transakcje</a></li>
+            <li id="li1" class="month" role="presentation"><a id="a1">Styczeń <span class="badge"></span></a></li>
+            <li id="li2" class="month" role="presentation"><a id="a2">Luty</a></li>
+            <li id="li3" class="month" role="presentation"><a id="a3">Marzec<span class="badge"></span></a></li>
+            <li id="li4" class="month" role="presentation"><a id="a4">Kwiecień <span class="badge"></span></a></li>
+            <li id="li5" class="month" role="presentation"><a id="a5">Maj</a></li>
+            <li id="li6" class="month" role="presentation"><a id="a6">Czerwiec<span class="badge"></span></a></li>
+            <li id="li7" class="month" role="presentation"><a id="a7">Lipiec <span class="badge"></span></a></li>
+            <li id="li8" class="month" role="presentation"><a id="a8">Sierpień</a></li>
+            <li id="li9" class="month" role="presentation"><a id="a9">Wrzesień<span class="badge"></span></a></li>
+            <li id="li10" class="month" role="presentation"><a id="a10">Październik <span class="badge"></span></a></li>
+            <li id="li11" class="month" role="presentation"><a id="a11">Listopad</a></li>
+            <li id="li12" class="month" role="presentation"><a id="a12">Grudzień<span class="badge"></span></a></li>
+            <li><form method="post" asp-controller="Home" asp-action="Index">
+            <input asp-for="@Model.Date" type="text" class="datepicker" autocomplete="off" value="@Model.Date">
+            <input type="submit" class="btn btn-success" />
+            </form>
+            </li>
+            <li class="navbar-right"><a asp-action="Create" asp-controller="Transaction"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a></li>
         </ul>
     </div>
 </div>
@@ -102,12 +105,11 @@
     });
 </script>
 <script>
-    $('.datepicker').datepicker({
-        format: "yyyy",
-        viewMode: "years",
-        minViewMode: "years",
-        orientation: "bottom auto"
-
+    $(".datepicker").datepicker({
+        format: "mm-yyyy",
+        viewMode: "months",
+        minViewMode: "months",
+        orientation: "bottom"
     });
 </script>
 

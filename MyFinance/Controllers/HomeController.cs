@@ -25,27 +25,46 @@ namespace MyFinance.Controllers
          
         }
         [HttpGet]
-        public async Task<IActionResult> Index(int monthNumber)
+        public async Task<IActionResult> Index(int year, int month)
         {
-            if(monthNumber==0)
+            var date = new DateTime();
+            if(year==0||month==0)
             {
-                monthNumber = DateTime.Now.Month;
-                return RedirectToAction("Index", "Home", new { monthNumber = monthNumber });
+                date = DateTime.Today;
             }
-
-            var transactions = await _transactionService.GetTransactionsAsync(User.Identity.Name, monthNumber);
+            else
+            {
+                date = new DateTime(year, month, 1);
+            }
+  
+            var transactions = await _transactionService.GetTransactionsAsync(User.Identity.Name, date);
             var earnings = _transactionService.CalculateEarnings(transactions);
             var expanses = _transactionService.CalculateExpanses(transactions);
+
 
             var model = new HomeViewModel
             {
                 Transactions = transactions,
                 Earnings = earnings,
-                Expanses = expanses
+                Expanses = expanses,
+                Date = date.ToString("MM-yyyy")
+
             };
             return View(model);
         }
-       
+
+        [HttpPost]
+
+        public IActionResult Index(HomeViewModel model)
+        {
+            if(!ModelState.IsValid)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            var date = DateTime.Parse(model.Date);
+            return RedirectToAction("Index", "Home", new { year = date.Year, month = date.Month });
+        }
+
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

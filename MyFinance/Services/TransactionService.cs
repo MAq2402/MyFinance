@@ -60,7 +60,7 @@ namespace MyFinance.Services
             return transaction;
         }
 
-        public async Task<IEnumerable<Transaction>> GetTransactionsAsync(string userName,int month)
+        public async Task<IEnumerable<Transaction>> GetTransactionsAsync(string userName,DateTime date)
         {
             var user = await _userManager.FindByNameAsync(userName);
 
@@ -69,7 +69,9 @@ namespace MyFinance.Services
                 throw new Exception("Could not find user");
             }
 
-            return _transactionRepository.GetBy(t => t.Account.UserId == user.Id&&t.DateTime.Month==month)
+            return _transactionRepository.GetBy(t => t.Account.UserId == user.Id&&
+                                                t.DateTime.Month==date.Month&&
+                                                t.DateTime.Year==date.Year)
                                          .Include(t => t.Category)
                                          .Include(t => t.Account)
                                          .OrderByDescending(t => t.DateTime);
