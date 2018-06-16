@@ -12,9 +12,9 @@ namespace MyFinance.Models.Home
         public IEnumerable<Entities.Transaction> Transactions { get; set; }
         public decimal Earnings { get; set; }
         public decimal Expanses { get; set; }
+
         [Required]
         public string Date { get; set; }
-        //public int Year { get; set; }
-        //public int Month { get; set; }
+
     }
 }

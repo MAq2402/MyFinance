@@ -10,6 +10,7 @@ namespace MyFinance.Models.TransactionCategory
     public class IndexViewModel
     {
         public IEnumerable<MyFinance.Entities.TransactionCategory> Categories { get; set; }
+
         [Required]
         public string Name { get; set; }
     }

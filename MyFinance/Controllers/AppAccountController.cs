@@ -39,7 +39,6 @@ namespace MyFinance.Controllers
             return View(model);
         }
         [HttpPost]
-        //[ValidateModel]
         public async Task<IActionResult> Index(IndexViewModel modelFromBody)
         {
 

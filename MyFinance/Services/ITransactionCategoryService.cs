@@ -12,7 +12,6 @@ namespace MyFinance.Services
         Task<TransactionCategory> GetCategoryAsync(string userName, int id);
         Task<TransactionCategory> AddCategoryAsync(Models.TransactionCategory.IndexViewModel model, string userName);
         Task AddDefaultCategoryAsync(string userName);
-
         void DeleteCategory(TransactionCategory category);
     }
 }

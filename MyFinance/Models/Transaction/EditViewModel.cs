@@ -9,11 +9,8 @@ namespace MyFinance.Models.Transaction
 {
     public class EditViewModel:TransactionInputModel
     {
-
-
         public IEnumerable<MyFinance.Entities.Account> Accounts { get; set; }
         public IEnumerable<MyFinance.Entities.TransactionCategory> Categories { get; set; }
-
         public int Id { get; set; }
     }
 }
