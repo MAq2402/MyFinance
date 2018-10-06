@@ -15,5 +15,3 @@ It is .NET Core project.
 - Unit tests
 - Asp identity
 - Bootstrap 3.37
-
-More to come soon.
